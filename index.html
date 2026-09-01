@@ -297,6 +297,29 @@
             background-color: rgba(43, 76, 111, 0.03);
         }
 
+        /* Botón para desplegar cronograma */
+        .btn-cronograma {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.55rem 1.4rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: var(--transition);
+            margin-bottom: 1.2rem;
+            cursor: pointer;
+        }
+        .btn-cronograma:hover {
+            background-color: #1e3a57;
+            color: white;
+            transform: translateY(-2px);
+        }
+
         /* Acordeón */
         .accordion-button {
             font-weight: 600;
@@ -323,6 +346,27 @@
         .accordion-body {
             background-color: var(--white);
             padding: 1.2rem 1.5rem;
+        }
+
+        /* Módulo actual resaltado */
+        .modulo-actual {
+            border-left: 6px solid var(--accent);
+            background-color: rgba(120, 166, 79, 0.05);
+        }
+        .modulo-actual .accordion-button:not(.collapsed) {
+            background-color: rgba(120, 166, 79, 0.12);
+        }
+        .badge-actual {
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin-left: 0.5rem;
+            white-space: nowrap;
         }
 
         .material-link {
@@ -471,151 +515,156 @@
     <main id="main-content">
         <div class="container">
 
-            <!-- CRONOGRAMA -->
+            <!-- CRONOGRAMA (desplegable) -->
             <section class="bloque" aria-labelledby="titulo-cronograma">
                 <h2 id="titulo-cronograma">
                     <i class="fa-solid fa-calendar-alt"></i> Cronograma
                 </h2>
-                <div class="table-responsive">
-                    <table class="tabla-cronograma">
-                        <thead>
-                            <tr>
-                                <th>MÓDULO</th>
-                                <th>FECHA</th>
-                                <th>Horario</th>
-                                <th>PROFESOR A CARGO</th>
-                                <th>CONTENIDOS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Presentación</td>
-                                <td>24/08/2026</td>
-                                <td>15-17hs</td>
-                                <td>Ing. Cristina Goyenechea y Equipo Docente | Autoridades</td>
-                                <td>Presentación de docentes e introducción al Curso.</td>
-                            </tr>
-                            <tr>
-                                <td>Módulo I</td>
-                                <td>31/08/2026</td>
-                                <td>17-19hs</td>
-                                <td>Dr. Guillermo Marchesi<br>Dr. Osvaldo Fernández</td>
-                                <td>Marco Legal general para todas las corrientes de residuos.</td>
-                            </tr>
-                            <tr>
-                                <td>Módulo II</td>
-                                <td>07/09/2026</td>
-                                <td>17-19hs</td>
-                                <td>Arq. Santiago Fernando Alonso<br>Dr. Javier Manzo</td>
-                                <td>Planificación estratégica y diseño de Planes de Gestión Integral de Residuos Sólidos Urbanos.</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>10/09/2026</td>
-                                <td>17-19hs</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Módulo III</td>
-                                <td>14/09/2026</td>
-                                <td>17-19hs</td>
-                                <td>Arq. Santiago Fernando Alonso<br>Dr. Javier Manzo</td>
-                                <td>Infraestructura, Operación y Logística de los Sistemas de Gestión.</td>
-                            </tr>
-                            <tr>
-                                <td>Módulo IV</td>
-                                <td>21/09/2026</td>
-                                <td>17-19hs</td>
-                                <td>Lic. Claudia Kalinec<br>Ing. Gabriela Joubert</td>
-                                <td>Gestión de Corrientes Especiales, Peligrosos y de Manejo Diferenciado.</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>28/09/2026</td>
-                                <td>17-19hs</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Módulo V</td>
-                                <td>05/10/2026</td>
-                                <td>17-19hs</td>
-                                <td>Lic. Bioq. Pablo Nardone</td>
-                                <td>Regionalización y Gestión Intermunicipal.</td>
-                            </tr>
-                            <tr>
-                                <td>Módulo VI</td>
-                                <td>15/10/2026</td>
-                                <td>17-19hs</td>
-                                <td>Lic. Bioq. Pablo Nardone</td>
-                                <td>Gestión de Residuos de la Actividad Agropecuaria.</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>19/10/2026</td>
-                                <td>17-19hs</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Módulo VII</td>
-                                <td>26/10/2026</td>
-                                <td>17-19hs</td>
-                                <td>Ing. Patricia Fernández<br>Ing. Walter Ordinas</td>
-                                <td>Economía Circular, Valorización y Financiamiento.</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>02/11/2026</td>
-                                <td>17-19hs</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Módulo VIII</td>
-                                <td>09/11/2026</td>
-                                <td>17-19hs</td>
-                                <td>Lic. Renée Córdova</td>
-                                <td>Alternativas de Financiamiento y Soluciones Sectoriales.</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>16/11/2026</td>
-                                <td>17-19hs</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Módulo IX</td>
-                                <td>23/11/2026</td>
-                                <td>17-19hs</td>
-                                <td>Lic. Rosa Hojman</td>
-                                <td>Educación Ambiental, participación ciudadana e Inclusión Social.</td>
-                            </tr>
-                            <tr>
-                                <td>Módulo X</td>
-                                <td>26/11/2026</td>
-                                <td>17-19hs</td>
-                                <td>Lic. Maximiliano Gómez</td>
-                                <td>Prácticas: Estudio de Casos y Proyectos de Intervención.</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>30/11/2026</td>
-                                <td>17-19hs</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>03/12/2026</td>
-                                <td>17-19hs</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <button class="btn-cronograma" type="button" data-bs-toggle="collapse" data-bs-target="#cronogramaCollapse" aria-expanded="false" aria-controls="cronogramaCollapse">
+                    <i class="fa-solid fa-chevron-down"></i> Mostrar cronograma
+                </button>
+                <div class="collapse" id="cronogramaCollapse">
+                    <div class="table-responsive">
+                        <table class="tabla-cronograma">
+                            <thead>
+                                <tr>
+                                    <th>MÓDULO</th>
+                                    <th>FECHA</th>
+                                    <th>Horario</th>
+                                    <th>PROFESOR A CARGO</th>
+                                    <th>CONTENIDOS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Presentación</td>
+                                    <td>24/08/2026</td>
+                                    <td>15-17hs</td>
+                                    <td>Ing. Cristina Goyenechea y Equipo Docente | Autoridades</td>
+                                    <td>Presentación de docentes e introducción al Curso.</td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo I</td>
+                                    <td>31/08/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Dr. Guillermo Marchesi<br>Dr. Osvaldo Fernández</td>
+                                    <td>Marco Legal general para todas las corrientes de residuos.</td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo II</td>
+                                    <td>07/09/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Arq. Santiago Fernando Alonso<br>Dr. Javier Manzo</td>
+                                    <td>Planificación estratégica y diseño de Planes de Gestión Integral de Residuos Sólidos Urbanos.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>10/09/2026</td>
+                                    <td>17-19hs</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo III</td>
+                                    <td>14/09/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Arq. Santiago Fernando Alonso<br>Dr. Javier Manzo</td>
+                                    <td>Infraestructura, Operación y Logística de los Sistemas de Gestión.</td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo IV</td>
+                                    <td>21/09/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Lic. Claudia Kalinec<br>Ing. Gabriela Joubert</td>
+                                    <td>Gestión de Corrientes Especiales, Peligrosos y de Manejo Diferenciado.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>28/09/2026</td>
+                                    <td>17-19hs</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo V</td>
+                                    <td>05/10/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Lic. Bioq. Pablo Nardone</td>
+                                    <td>Regionalización y Gestión Intermunicipal.</td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo VI</td>
+                                    <td>15/10/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Lic. Bioq. Pablo Nardone</td>
+                                    <td>Gestión de Residuos de la Actividad Agropecuaria.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>19/10/2026</td>
+                                    <td>17-19hs</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo VII</td>
+                                    <td>26/10/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Ing. Patricia Fernández<br>Ing. Walter Ordinas</td>
+                                    <td>Economía Circular, Valorización y Financiamiento.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>02/11/2026</td>
+                                    <td>17-19hs</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo VIII</td>
+                                    <td>09/11/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Lic. Renée Córdova</td>
+                                    <td>Alternativas de Financiamiento y Soluciones Sectoriales.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>16/11/2026</td>
+                                    <td>17-19hs</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo IX</td>
+                                    <td>23/11/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Lic. Rosa Hojman</td>
+                                    <td>Educación Ambiental, participación ciudadana e Inclusión Social.</td>
+                                </tr>
+                                <tr>
+                                    <td>Módulo X</td>
+                                    <td>26/11/2026</td>
+                                    <td>17-19hs</td>
+                                    <td>Lic. Maximiliano Gómez</td>
+                                    <td>Prácticas: Estudio de Casos y Proyectos de Intervención.</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>30/11/2026</td>
+                                    <td>17-19hs</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>03/12/2026</td>
+                                    <td>17-19hs</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -663,11 +712,12 @@
                         </div>
                     </div>
 
-                    <!-- Módulo II (abierto por defecto) -->
-                    <div class="accordion-item">
+                    <!-- Módulo II (actual, resaltado) -->
+                    <div class="accordion-item modulo-actual">
                         <h2 class="accordion-header" id="headingMod2">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod2" aria-expanded="true" aria-controls="collapseMod2">
                                 Módulo II | 07/09/2026
+                                <span class="badge-actual">Clase actual</span>
                             </button>
                         </h2>
                         <div id="collapseMod2" class="accordion-collapse collapse show" aria-labelledby="headingMod2" data-bs-parent="#acordeonModulos">
