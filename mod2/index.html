@@ -569,7 +569,7 @@
         <div class="container">
             <div class="etiqueta">Actividad Módulo 2 y 3</div>
             <h1>Flujo de Trabajo en la Gestión de Residuos</h1>
-            <p>Visualiza un flujo de trabajo para tu organización, localidad o contexto en el que trabajes. Puede ser un modelo complejo o sencillo, según el caso. La actividad será evaluada</p>
+            <p>Completa las actividades</p>
         </div>
     </header>
 
@@ -603,7 +603,6 @@
             </section>
 
             <section id="activity-content" class="hidden">
-                <!-- Acordeón de actividades -->
                 <div class="accordion" id="accordionActividades">
 
                     <!-- Actividad 1 -->
@@ -838,7 +837,7 @@
 
         const coloresDisponibles = ['#2B4C6F', '#78A64F', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#3498db', '#34495e', '#95a5a6'];
 
-        // Datos de ejemplo para la tabla (Actividad 3) - ahora en estructura vertical
+        // Datos de ejemplo para la tabla (Actividad 3)
         const datosEjemploTabla = [
             { campo: 'Generación - Cantidad', valor: '110' },
             { campo: 'Generación - Unidad de medida', valor: 'Toneladas diarias' },
@@ -865,7 +864,6 @@
             { campo: 'Factibilidad', valor: 'Conseguir financiamiento para equipos, obra y mantenimiento del relleno. Financiamiento para camiones recolectores y equipos de higiene urbana. Mejorar la % de cobro de la tasa municipal, Incorporar ONGs, actores sociales, políticos y educación para hacer un proyecto qe trascienda la gestión política. Que sea política de estado a largo plazo' }
         ];
 
-        // Datos para las otras dos filas de ejemplo
         const datosEjemploFila2 = {
             'Generación - Cantidad': '',
             'Generación - Unidad de medida': '',
@@ -1313,8 +1311,63 @@
             });
         }
 
-        // Las funciones obtenerDatosTabla, cargarActividad3 y el resto permanecen igual
-        // ...
+        function obtenerDatosTabla() {
+            const filas = [];
+            const ejemplo1 = {};
+            const ejemplo2 = {};
+            const ejemplo3 = {};
+            document.querySelectorAll('#tabla-body input').forEach(input => {
+                const campo = input.dataset.campo;
+                const ejemplo = parseInt(input.dataset.ejemplo);
+                if (ejemplo === 1) ejemplo1[campo] = input.value.trim();
+                else if (ejemplo === 2) ejemplo2[campo] = input.value.trim();
+                else if (ejemplo === 3) ejemplo3[campo] = input.value.trim();
+            });
+            filas.push(ejemplo1, ejemplo2, ejemplo3);
+            return filas;
+        }
+
+        async function cargarActividad3() {
+            if (!usuarioActual) return;
+            document.getElementById('mod3-spinner').classList.remove('hidden');
+            generarTablaEditable();
+            try {
+                const body = new URLSearchParams({ action: 'getMod3', correo: usuarioActual.correo, dni: usuarioActual.dni });
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const result = await resp.json();
+                if (result.success && result.data) {
+                    const inputs = document.querySelectorAll('#tabla-body input');
+                    inputs.forEach(input => {
+                        const campo = input.dataset.campo;
+                        const ejemplo = parseInt(input.dataset.ejemplo);
+                        const valor = result.data[ejemplo - 1]?.[campo] || '';
+                        input.value = valor;
+                    });
+                }
+            } catch (err) { console.error('Error cargando actividad 3:', err); }
+            finally { document.getElementById('mod3-spinner').classList.add('hidden'); }
+        }
+
+        document.getElementById('btn-guardar-mod3').addEventListener('click', async () => {
+            if (!usuarioActual) return;
+            const datos = obtenerDatosTabla();
+            const hayDatos = datos.some(fila => Object.values(fila).some(val => val.trim() !== ''));
+            if (!hayDatos) { mostrarMensaje('mod3-message', 'Complete al menos un campo.', 'warning'); return; }
+            const body = new URLSearchParams({ action: 'saveMod3', correo: usuarioActual.correo, dni: usuarioActual.dni, data: JSON.stringify(datos) });
+            try {
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const result = await resp.json();
+                if (result.success) mostrarMensaje('mod3-message', 'Tabla guardada correctamente.', 'success');
+                else mostrarMensaje('mod3-message', result.message || 'Error al guardar.', 'danger');
+            } catch (err) { console.error(err); mostrarMensaje('mod3-message', 'Error de conexión.', 'danger'); }
+        });
+
+        document.getElementById('btn-imprimir').addEventListener('click', () => { window.print(); });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarElementos();
+            inicializarColorPicker();
+        });
     </script>
 </body>
 </html>
