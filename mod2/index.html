@@ -961,7 +961,7 @@
 
         async function cargarElementos() {
             try {
-                const respuesta = await fetch('https://redconsultor.github.io/curso_residuos/elements/index.html');
+                const respuesta = await fetch('../elements/index.html');
                 if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
                 const html = await respuesta.text();
                 const parser = new DOMParser();
