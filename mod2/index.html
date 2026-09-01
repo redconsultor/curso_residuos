@@ -556,6 +556,19 @@
         .grupo-factibilidad td { background-color: #F5F5F5; }
         .grupo-factibilidad .campo { background-color: #E8E8E8; }
 
+        footer {
+            background-color: var(--primary);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 1.8rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        footer .footer-texto {
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
         .hidden { display: none !important; }
 
         @media (max-width: 768px) {
@@ -578,42 +591,65 @@
                 font-size: 0.75rem;
             }
         }
-                /* Estilos para el footer (copiados de la página principal) */
-        footer {
-            background-color: var(--primary);
-            color: rgba(255, 255, 255, 0.85);
-            padding: 1.8rem 0;
-            text-align: center;
-            margin-top: 3rem;
-        }
-        footer .footer-texto {
-            font-size: 1.05rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        /* Estilo para skip-link (opcional, ya existe .skip-link) */
-        .skip-link {
-            position: absolute;
-            left: -9999px;
-            top: 0;
-            background: var(--primary);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            z-index: 2000;
-            border-radius: 0 0 8px 0;
-            text-decoration: none;
-        }
-        .skip-link:focus {
-            left: 0;
-            top: 0;
-        }
     </style>
 </head>
 <body>
 
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
-    <div id="header-container"></div>
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar navbar-expand-lg" aria-label="Navegación principal">
+        <div class="container">
+            <a class="navbar-brand" href="https://redconsultor.github.io/curso_residuos/">
+                <i class="fa-solid fa-recycle"></i>
+                <span>Gestión de Residuos</span>
+                <span class="d-none d-lg-inline ms-1" style="font-size: 0.85rem; font-weight: 400; color: #666;">
+                    Comunas, municipios y zonas rurales
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item dropdown me-lg-3">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-list-check me-1"></i> Actividades
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="https://redconsultor.github.io/curso_residuos/mod2/">
+                                    <i class="fa-solid fa-play me-2 text-success"></i>
+                                    Módulo 2: Flujo de Trabajo en la Gestión de Residuos
+                                </a>
+                            </li>
+                            <li>
+                                <span class="dropdown-item disabled-item">
+                                    <span><i class="fa-solid fa-plus me-2"></i> Próximamente</span>
+                                    <span class="badge-soon">Muy pronto</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="dropdown-item disabled-item">
+                                    <span><i class="fa-solid fa-plus me-2"></i> Próximamente</span>
+                                    <span class="badge-soon">Muy pronto</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn-campus" href="https://capacitacion.senadoer.gob.ar/course/view.php?id=27"
+                            target="_blank" rel="noopener noreferrer" title="Ir al Campus Virtual">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            Volver al Campus
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <header class="hero-page">
         <div class="container">
@@ -823,7 +859,13 @@
         </div>
     </main>
 
-    <div id="footer-container"></div>
+    <footer>
+        <div class="container">
+            <div class="footer-texto" style="text-align: center;">
+                2026 - Curso de Gestión de Residuos para comunas, municipios y zonas rurales | (c) Pablo Kriger
+            </div>
+        </div>
+    </footer>
 
     <!-- MODAL TAREA -->
     <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
@@ -958,22 +1000,6 @@
             'Disposición - Observaciones': '',
             'Factibilidad': ''
         };
-
-        async function cargarElementos() {
-            try {
-                const respuesta = await fetch('../elements/index.html');
-                if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-                const html = await respuesta.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const skipLink = doc.querySelector('.skip-link');
-                const navbar = doc.querySelector('nav');
-                const footer = doc.querySelector('footer');
-                if (skipLink && navbar) document.getElementById('header-container').innerHTML = skipLink.outerHTML + navbar.outerHTML;
-                if (footer) document.getElementById('footer-container').innerHTML = footer.outerHTML;
-                document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(toggle => new bootstrap.Dropdown(toggle));
-            } catch (error) { console.error('Error cargando elementos comunes:', error); }
-        }
 
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
         function mostrarMensaje(id, mensaje, tipo = 'success') {
@@ -1409,7 +1435,6 @@
         document.getElementById('btn-imprimir').addEventListener('click', () => { window.print(); });
 
         document.addEventListener('DOMContentLoaded', () => {
-            cargarElementos();
             inicializarColorPicker();
         });
     </script>
