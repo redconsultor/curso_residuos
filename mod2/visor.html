@@ -1,1 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visor de Actividades | Gestión de Residuos</title>
 
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #F0F0E6;
+            --text: #3C3C3C;
+            --primary: #2B4C6F;
+            --accent: #78A64F;
+            --white: #ffffff;
+            --shadow: 0 8px 20px rgba(0,0,0,0.08);
+            --radius: 16px;
+            --transition: 0.3s ease;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --naranja: #f39c12;
+            --rojo: #e74c3c;
+            --verde: #27ae60;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            z-index: 2000;
+            border-radius: 0 0 8px 0;
+            text-decoration: none;
+        }
+        .skip-link:focus { left: 0; top: 0; }
+
+        .navbar {
+            background-color: var(--bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            padding: 0.8rem 0;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+        .navbar-brand i { font-size: 1.8rem; color: var(--accent); }
+        .nav-link {
+            font-weight: 500;
+            color: var(--text) !important;
+            transition: var(--transition);
+            padding: 0.5rem 1rem !important;
+        }
+        .nav-link:hover, .nav-link:focus {
+            color: var(--primary) !important;
+            background-color: rgba(43,76,111,0.06);
+            border-radius: 8px;
+        }
+        .dropdown-menu {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            padding: 0.5rem;
+            background: var(--white);
+        }
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        .dropdown-item:hover {
+            background-color: rgba(120,166,79,0.1);
+            color: var(--primary);
+        }
+        .dropdown-item.disabled-item {
+            opacity: 0.55;
+            pointer-events: none;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .badge-soon {
+            background-color: #e0e0e0;
+            color: #555;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .btn-campus {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.55rem 1.4rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-campus:hover {
+            background-color: #1e3a57;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(43,76,111,0.35);
+        }
+
+        .hero-page {
+            padding: 3rem 0 2rem;
+            background: linear-gradient(135deg, rgba(43,76,111,0.05), rgba(120,166,79,0.07));
+            border-bottom: 1px solid rgba(43,76,111,0.1);
+        }
+        .etiqueta {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        .hero-page h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .hero-page p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .login-card {
+            max-width: 450px;
+            margin: 2rem auto;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        .login-card h2 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .form-control {
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            padding: 0.7rem 1rem;
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.2rem rgba(120,166,79,0.15);
+        }
+
+        main {
+            flex: 1;
+            padding-bottom: 3rem;
+        }
+
+        .bloque {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .bloque h2 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .bloque h2 i { color: var(--accent); }
+
+        .btn-guardar {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 1.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-guardar:hover {
+            background-color: #5f8a3a;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .btn-outline-primary {
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .spinner-overlay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+        .spinner-border-sm {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-width: 0.2em;
+        }
+
+        .user-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+        }
+        .user-card:hover {
+            background: #f0f8ff;
+            border-color: var(--primary);
+        }
+        .user-card.active {
+            border-color: var(--accent);
+            background: #f0fff0;
+        }
+        .user-card.nivel-aprobado { background: #e8f5e9; border-left: 5px solid var(--verde); }
+        .user-card.nivel-revisar1 { background: #fff3e0; border-left: 5px solid var(--naranja); }
+        .user-card.nivel-revisar2 { background: #ffebee; border-left: 5px solid var(--rojo); }
+        .user-card.nivel-sin-evaluar { background: #ffffff; }
+
+        .answer-box {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .answer-box h5 {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .flow-container {
+            background: #faf9f4;
+            border: 2px dashed #ccc;
+            border-radius: var(--radius);
+            min-height: 400px;
+            position: relative;
+            overflow: auto;
+            padding: 20px;
+            margin-top: 1rem;
+        }
+        .flow-canvas {
+            position: relative;
+            min-width: 800px;
+            min-height: 400px;
+        }
+        .task-node {
+            position: absolute;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 10px 12px;
+            min-width: 150px;
+            max-width: 220px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: grab;
+            user-select: none;
+            transition: box-shadow 0.2s;
+        }
+        .task-node:active {
+            cursor: grabbing;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .task-node .node-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .task-node .node-desc {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 2px;
+        }
+        .task-node .node-actores {
+            font-size: 0.75rem;
+            color: #777;
+            font-style: italic;
+        }
+        .task-node .color-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        .task-node.tipo-descripcion {
+            border-radius: 50px;
+            background: #fefefe;
+            border: 2px dashed #78A64F;
+        }
+        .task-node.tipo-texto {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            cursor: text;
+        }
+        .task-node.tipo-texto .node-title {
+            color: #444;
+            font-weight: 400;
+        }
+        .flow-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .flow-svg line {
+            stroke: #888;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+        .hidden { display: none !important; }
+
+        .filtro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: 0.2s;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: white;
+        }
+        .filtro-badge.activo {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .hero-page h1 { font-size: 1.8rem; }
+            .bloque { padding: 1.5rem; }
+            .flow-container { min-height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <div id="header-container"></div>
+
+    <header class="hero-page">
+        <div class="container">
+            <div class="etiqueta">Visor de Actividades</div>
+            <h1>Casos completados</h1>
+            <p>Visualizá las respuestas de los participantes</p>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <div class="container">
+
+            <section id="login-section" aria-label="Iniciar sesión">
+                <div class="login-card">
+                    <h2><i class="fa-solid fa-eye"></i> Acceso para visualizadores</h2>
+                    <p class="text-muted mb-4">Solo administradores del Curso pueden acceder.</p>
+                    <div class="mb-3">
+                        <label for="login-email" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="login-email" placeholder="tucorreo@ejemplo.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="login-password" class="form-label">Contraseña (DNI)</label>
+                        <input type="password" class="form-control" id="login-password" placeholder="Tu DNI" required>
+                    </div>
+                    <button class="btn btn-guardar w-100" id="btn-login">
+                        <i class="fa-solid fa-right-to-bracket"></i> Entrar
+                    </button>
+                    <div id="login-spinner" class="spinner-overlay hidden">
+                        <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                        <span>Verificando credenciales...</span>
+                    </div>
+                    <div id="login-message" class="mt-3 text-center fw-semibold" style="color: var(--danger);"></div>
+                </div>
+            </section>
+
+            <section id="visor-content" class="hidden">
+                <div class="bloque">
+                    <h2><i class="fa-solid fa-users"></i> Usuarios con actividad</h2>
+                    <div class="mb-3">
+                        <label for="search-nick" class="form-label">Buscar por nickname</label>
+                        <input type="text" class="form-control" id="search-nick" placeholder="Escribí el nick...">
+                    </div>
+                    <div id="filtros" class="mb-3">
+                        <span class="filtro-badge activo" data-filtro="todos">Todos</span>
+                        <span class="filtro-badge" data-filtro="Aprobado">Aprobados</span>
+                        <span class="filtro-badge" data-filtro="Revisar I">Revisar I</span>
+                        <span class="filtro-badge" data-filtro="Revisar II">Revisar II</span>
+                        <span class="filtro-badge" data-filtro="Sin evaluar">Sin evaluar</span>
+                        <span class="filtro-badge" data-filtro="Destacado">Destacado</span>
+                    </div>
+                    <div id="lista-usuarios" class="row g-3"></div>
+                    <div id="lista-spinner" class="spinner-overlay hidden">
+                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        <span>Cargando usuarios...</span>
+                    </div>
+                </div>
+
+                <div class="bloque hidden" id="detalle-usuario">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                        <h2><i class="fa-solid fa-file-lines"></i> Respuestas de <span id="nombre-usuario"></span></h2>
+                        <button class="btn btn-outline-primary" id="btn-imprimir"><i class="fa-solid fa-print"></i> Imprimir / PDF</button>
+                    </div>
+                    <div id="respuestas-contenido"></div>
+
+                    <!-- Sección de evaluación -->
+                    <div class="answer-box mt-4">
+                        <h5><i class="fa-solid fa-star"></i> Evaluación del trabajo</h5>
+                        <div class="mb-3">
+                            <label for="evaluacion-texto" class="form-label">Evaluación (visible para el cursante)</label>
+                            <textarea class="form-control" id="evaluacion-texto" rows="4"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nivel de evaluación</label>
+                            <select class="form-select" id="evaluacion-nivel">
+                                <option value="Sin evaluar">Sin evaluar</option>
+                                <option value="Aprobado">Aprobado</option>
+                                <option value="Revisar I">Revisar I</option>
+                                <option value="Revisar II">Revisar II</option>
+                            </select>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="evaluacion-destacado">
+                            <label class="form-check-label" for="evaluacion-destacado">
+                                <i class="fa-solid fa-star text-warning"></i> Destacar
+                            </label>
+                        </div>
+                        <button class="btn btn-guardar" id="btn-guardar-evaluacion">
+                            <i class="fa-solid fa-floppy-disk"></i> Guardar evaluación
+                        </button>
+                        <div id="evaluacion-message" class="mt-2"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3uKKaN5p9VisQE7S_a4XoNH_p9qflfYR_lr-9fi_0KVM2bnNHBMW89TVUTHzZX8M/exec';
+        let visorActual = null;
+        let usuariosData = [];
+        let usuarioSeleccionado = null;
+        let filtroActual = 'todos';
+
+        async function cargarElementos() {
+            try {
+                const respuesta = await fetch('../elements/index.html');
+                if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+                const html = await respuesta.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const skipLink = doc.querySelector('.skip-link');
+                const navbar = doc.querySelector('nav');
+                const footer = doc.querySelector('footer');
+                if (skipLink && navbar) document.getElementById('header-container').innerHTML = skipLink.outerHTML + navbar.outerHTML;
+                if (footer) document.getElementById('footer-container').innerHTML = footer.outerHTML;
+                document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(toggle => new bootstrap.Dropdown(toggle));
+            } catch (error) { console.error('Error cargando elementos comunes:', error); }
+        }
+
+        function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+        function mostrarMensaje(id, mensaje, tipo = 'success') {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.innerHTML = `<div class="alert alert-${tipo} py-2 px-3" style="border-radius: 10px;">${mensaje}</div>`;
+            setTimeout(() => el.innerHTML = '', 4000);
+        }
+
+        document.getElementById('btn-login').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const dni = document.getElementById('login-password').value.trim();
+            if (!email || !dni) { mostrarMensaje('login-message', 'Por favor completá ambos campos.', 'danger'); return; }
+            document.getElementById('login-spinner').classList.remove('hidden');
+            document.getElementById('btn-login').disabled = true;
+            try {
+                const body = new URLSearchParams({ action: 'loginVisor', correo: email, dni });
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const data = await resp.json();
+                if (data.success) {
+                    visorActual = { correo: email, dni };
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('visor-content').classList.remove('hidden');
+                    cargarListaUsuarios();
+                } else {
+                    mostrarMensaje('login-message', data.message || 'Acceso denegado.', 'danger');
+                }
+            } catch (err) { console.error(err); mostrarMensaje('login-message', 'Error de conexión con el servidor.', 'danger'); }
+            finally {
+                document.getElementById('login-spinner').classList.add('hidden');
+                document.getElementById('btn-login').disabled = false;
+            }
+        });
+
+        async function cargarListaUsuarios() {
+            document.getElementById('lista-spinner').classList.remove('hidden');
+            try {
+                const body = new URLSearchParams({ action: 'getVisorData', correo: visorActual.correo, dni: visorActual.dni });
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const data = await resp.json();
+                if (data.success && data.usuarios) {
+                    usuariosData = data.usuarios;
+                    aplicarFiltros();
+                } else console.error('Error al obtener datos:', data.message);
+            } catch (err) { console.error('Error cargando lista:', err); }
+            finally { document.getElementById('lista-spinner').classList.add('hidden'); }
+        }
+
+        function aplicarFiltros() {
+            const texto = document.getElementById('search-nick').value.trim().toLowerCase();
+            let filtrados = usuariosData.filter(u => u.nick.toLowerCase().includes(texto));
+            if (filtroActual !== 'todos') {
+                if (filtroActual === 'Destacado') {
+                    filtrados = filtrados.filter(u => u.destacado === true || u.destacado === 'true' || u.destacado === 'TRUE');
+                } else {
+                    filtrados = filtrados.filter(u => (u.nivel || 'Sin evaluar') === filtroActual);
+                }
+            }
+            renderizarListaUsuarios(filtrados);
+        }
+
+        function renderizarListaUsuarios(usuarios) {
+            const ordenados = [...usuarios].sort((a,b) => a.nick.localeCompare(b.nick));
+            const contenedor = document.getElementById('lista-usuarios');
+            contenedor.innerHTML = '';
+            if (ordenados.length === 0) { contenedor.innerHTML = '<p class="text-muted">No hay usuarios con actividad.</p>'; return; }
+            ordenados.forEach(u => {
+                const div = document.createElement('div');
+                div.className = 'col-md-4 col-sm-6';
+                const nivelClass = (u.nivel === 'Aprobado') ? 'nivel-aprobado' : (u.nivel === 'Revisar I') ? 'nivel-revisar1' : (u.nivel === 'Revisar II') ? 'nivel-revisar2' : 'nivel-sin-evaluar';
+                div.innerHTML = `
+                    <div class="user-card ${nivelClass}" data-nick="${u.nick}">
+                        <i class="fa-solid fa-user me-2"></i>
+                        <strong>${escapeHtml(u.nick)}</strong>
+                        ${u.destacado === true || u.destacado === 'true' || u.destacado === 'TRUE' ? '<i class="fa-solid fa-star text-warning ms-2"></i>' : ''}
+                    </div>
+                `;
+                div.querySelector('.user-card').addEventListener('click', () => {
+                    document.querySelectorAll('.user-card').forEach(c => c.classList.remove('active'));
+                    div.querySelector('.user-card').classList.add('active');
+                    usuarioSeleccionado = u;
+                    mostrarDetalleUsuario(u);
+                });
+                contenedor.appendChild(div);
+            });
+        }
+
+        document.getElementById('search-nick').addEventListener('input', aplicarFiltros);
+
+        document.getElementById('filtros').addEventListener('click', (e) => {
+            const badge = e.target.closest('.filtro-badge');
+            if (!badge) return;
+            filtroActual = badge.dataset.filtro;
+            document.querySelectorAll('.filtro-badge').forEach(b => b.classList.remove('activo'));
+            badge.classList.add('activo');
+            aplicarFiltros();
+        });
+
+        function mostrarDetalleUsuario(u) {
+            document.getElementById('nombre-usuario').textContent = u.nick;
+            const contenedor = document.getElementById('respuestas-contenido');
+            contenedor.innerHTML = '';
+            // Actividad 1
+            if (u.mod1) {
+                const preguntas = [
+                    { titulo: '1. ¿Qué tipo de residuos considerás necesario gestionar?', respuesta: u.mod1.pregunta1 },
+                    { titulo: '2. ¿De qué volumen estamos hablando? ¿Y cada cuánto tiempo?', respuesta: u.mod1.pregunta2 },
+                    { titulo: '3. Formulá el problema que observás en la gestión de residuos actual.', respuesta: u.mod1.pregunta3 },
+                    { titulo: '4. ¿De qué manera creés que sería factible mejorar, transformar o gestionar esa situación?', respuesta: u.mod1.pregunta4 }
+                ];
+                const divMod1 = document.createElement('div');
+                divMod1.className = 'answer-box';
+                divMod1.innerHTML = `<h5><i class="fa-solid fa-pen-to-square me-2"></i>Actividad 1</h5>`;
+                preguntas.forEach(p => {
+                    divMod1.innerHTML += `<p><strong>${escapeHtml(p.titulo)}</strong></p><p>${escapeHtml(p.respuesta || 'Sin respuesta')}</p><hr>`;
+                });
+                contenedor.appendChild(divMod1);
+            }
+            // Actividad 2
+            if (u.mod2 && u.mod2.length > 0) {
+                const divMod2 = document.createElement('div');
+                divMod2.className = 'answer-box';
+                divMod2.innerHTML = `<h5><i class="fa-solid fa-diagram-project me-2"></i>Actividad 2 (Diagrama)</h5>`;
+                const flowContainer = document.createElement('div');
+                flowContainer.className = 'flow-container';
+                const flowCanvas = document.createElement('div');
+                flowCanvas.className = 'flow-canvas';
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('class', 'flow-svg');
+                svg.innerHTML = `<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" class="arrowhead" /></marker></defs>`;
+                flowCanvas.appendChild(svg);
+                flowContainer.appendChild(flowCanvas);
+                divMod2.appendChild(flowContainer);
+                u.mod2.forEach(tarea => {
+                    (tarea.conexiones || []).forEach(idDestino => {
+                        const destino = u.mod2.find(t => t.id === idDestino);
+                        if (!destino) return;
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', tarea.x + 100); line.setAttribute('y1', tarea.y + 40);
+                        line.setAttribute('x2', destino.x + 100); line.setAttribute('y2', destino.y + 40);
+                        line.setAttribute('marker-end', 'url(#arrowhead)');
+                        svg.appendChild(line);
+                    });
+                });
+                u.mod2.forEach(tarea => {
+                    const nodo = document.createElement('div');
+                    nodo.className = 'task-node';
+                    if (tarea.tipo === 'Descripción') nodo.classList.add('tipo-descripcion');
+                    if (tarea.tipo === 'Texto') nodo.classList.add('tipo-texto');
+                    nodo.style.left = tarea.x + 'px'; nodo.style.top = tarea.y + 'px';
+                    nodo.style.borderColor = tarea.color;
+                    nodo.dataset.id = tarea.id;
+                    const colorDotHTML = tarea.tipo === 'Texto' ? '' : `<span class="color-dot" style="background:${tarea.color}"></span>`;
+                    nodo.innerHTML = `<div class="node-title">${colorDotHTML}${escapeHtml(tarea.titulo)}</div><div class="node-desc">${escapeHtml(tarea.descripcion || '')}</div><div class="node-actores">${escapeHtml(tarea.actores || '')}</div>`;
+                    nodo.addEventListener('mousedown', (e) => iniciarArrastreVisor(e, tarea, flowCanvas, u.mod2));
+                    nodo.addEventListener('touchstart', (e) => iniciarArrastreVisorTouch(e, tarea, flowCanvas, u.mod2), { passive: false });
+                    flowCanvas.appendChild(nodo);
+                });
+                contenedor.appendChild(divMod2);
+            }
+            // Cargar evaluación actual
+            document.getElementById('evaluacion-texto').value = u.evaluacion || '';
+            document.getElementById('evaluacion-nivel').value = u.nivel || 'Sin evaluar';
+            document.getElementById('evaluacion-destacado').checked = (u.destacado === true || u.destacado === 'true' || u.destacado === 'TRUE');
+            document.getElementById('detalle-usuario').classList.remove('hidden');
+        }
+
+        function iniciarArrastreVisor(e, tarea, canvas, listaTareas) {
+            e.preventDefault();
+            const nodo = document.querySelector(`.task-node[data-id="${tarea.id}"]`);
+            if (!nodo) return;
+            const rect = nodo.getBoundingClientRect();
+            const canvasRect = canvas.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            function mover(e) {
+                const nuevoX = e.clientX - canvasRect.left - offsetX;
+                const nuevoY = e.clientY - canvasRect.top - offsetY;
+                tarea.x = Math.max(0, Math.min(nuevoX, canvas.scrollWidth - 150));
+                tarea.y = Math.max(0, Math.min(nuevoY, canvas.scrollHeight - 80));
+                nodo.style.left = tarea.x + 'px';
+                nodo.style.top = tarea.y + 'px';
+                actualizarConexionesVisor(canvas, listaTareas);
+            }
+            function terminar() { document.removeEventListener('mousemove', mover); document.removeEventListener('mouseup', terminar); }
+            document.addEventListener('mousemove', mover);
+            document.addEventListener('mouseup', terminar);
+        }
+
+        function iniciarArrastreVisorTouch(e, tarea, canvas, listaTareas) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const nodo = document.querySelector(`.task-node[data-id="${tarea.id}"]`);
+            if (!nodo) return;
+            const rect = nodo.getBoundingClientRect();
+            const canvasRect = canvas.getBoundingClientRect();
+            const offsetX = touch.clientX - rect.left;
+            const offsetY = touch.clientY - rect.top;
+            function moverTouch(ev) {
+                ev.preventDefault();
+                const t = ev.touches[0];
+                const nuevoX = t.clientX - canvasRect.left - offsetX;
+                const nuevoY = t.clientY - canvasRect.top - offsetY;
+                tarea.x = Math.max(0, Math.min(nuevoX, canvas.scrollWidth - 150));
+                tarea.y = Math.max(0, Math.min(nuevoY, canvas.scrollHeight - 80));
+                nodo.style.left = tarea.x + 'px';
+                nodo.style.top = tarea.y + 'px';
+                actualizarConexionesVisor(canvas, listaTareas);
+            }
+            function terminarTouch() { document.removeEventListener('touchmove', moverTouch); document.removeEventListener('touchend', terminarTouch); }
+            document.addEventListener('touchmove', moverTouch, { passive: false });
+            document.addEventListener('touchend', terminarTouch);
+        }
+
+        function actualizarConexionesVisor(canvas, listaTareas) {
+            const svg = canvas.querySelector('svg');
+            svg.querySelectorAll('line').forEach(line => line.remove());
+            listaTareas.forEach(tarea => {
+                (tarea.conexiones || []).forEach(idDestino => {
+                    const destino = listaTareas.find(t => t.id === idDestino);
+                    if (!destino) return;
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', tarea.x + 100); line.setAttribute('y1', tarea.y + 40);
+                    line.setAttribute('x2', destino.x + 100); line.setAttribute('y2', destino.y + 40);
+                    line.setAttribute('marker-end', 'url(#arrowhead)');
+                    svg.appendChild(line);
+                });
+            });
+        }
+
+        // Guardar evaluación
+        document.getElementById('btn-guardar-evaluacion').addEventListener('click', async () => {
+            if (!usuarioSeleccionado) return;
+
+            const btn = document.getElementById('btn-guardar-evaluacion');
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Guardando...';
+
+            const evaluacion = document.getElementById('evaluacion-texto').value.trim();
+            const nivel = document.getElementById('evaluacion-nivel').value;
+            const destacado = document.getElementById('evaluacion-destacado').checked;
+
+            const body = new URLSearchParams({
+                action: 'saveEvaluacion',
+                correo: usuarioSeleccionado.correo || usuarioSeleccionado.nick + '@dominio.com',
+                evaluacion: evaluacion,
+                nivel: nivel,
+                destacado: destacado ? 'true' : 'false'
+            });
+
+            try {
+                const resp = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: body.toString()
+                });
+                const result = await resp.json();
+                if (result.success) {
+                    mostrarMensaje('evaluacion-message', 'Evaluación guardada correctamente.', 'success');
+                    usuarioSeleccionado.evaluacion = evaluacion;
+                    usuarioSeleccionado.nivel = nivel;
+                    usuarioSeleccionado.destacado = destacado;
+                    aplicarFiltros();
+                } else {
+                    mostrarMensaje('evaluacion-message', result.message || 'Error al guardar.', 'danger');
+                }
+            } catch (err) {
+                console.error(err);
+                mostrarMensaje('evaluacion-message', 'Error de conexión con el servidor.', 'danger');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        });
+
+        document.getElementById('btn-imprimir').addEventListener('click', () => {
+            window.print();
+        });
+
+        document.addEventListener('DOMContentLoaded', cargarElementos);
+    </script>
+</body>
+</html>
