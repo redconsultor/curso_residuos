@@ -1,1 +1,845 @@
-Prueba
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Residuos en Comunas, Municipios y Zonas Rurales</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        :root {
+            --bg: #F0F0E6;
+            --text: #3C3C3C;
+            --primary: #2B4C6F;
+            --accent: #78A64F;
+            --white: #ffffff;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            z-index: 2000;
+            border-radius: 0 0 8px 0;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+        }
+
+        /* Navbar (estilos para cuando se cargue desde elements) */
+        .navbar {
+            background-color: var(--bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            padding: 0.8rem 0;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+        .navbar-brand i {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        .nav-link {
+            font-weight: 500;
+            color: var(--text) !important;
+            transition: var(--transition);
+            padding: 0.5rem 1rem !important;
+        }
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary) !important;
+            background-color: rgba(43, 76, 111, 0.06);
+            border-radius: 8px;
+        }
+        .dropdown-menu {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            padding: 0.5rem;
+            background: var(--white);
+        }
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        .dropdown-item:hover {
+            background-color: rgba(120, 166, 79, 0.1);
+            color: var(--primary);
+        }
+        .dropdown-item.disabled-item {
+            opacity: 0.55;
+            pointer-events: none;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .badge-soon {
+            background-color: #e0e0e0;
+            color: #555;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-campus {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.55rem 1.4rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-campus:hover {
+            background-color: #1e3a57;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(43, 76, 111, 0.35);
+        }
+        .btn-campus i {
+            font-size: 0.9rem;
+        }
+
+        /* Hero / encabezado */
+        .hero-page {
+            padding: 2.5rem 0 1.8rem;
+            background: linear-gradient(135deg, rgba(43, 76, 111, 0.05) 0%, rgba(120, 166, 79, 0.07) 100%);
+            border-bottom: 1px solid rgba(43, 76, 111, 0.1);
+        }
+        .etiqueta {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        .hero-page h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        .hero-page .lead {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 820px;
+        }
+
+        /* Secciones */
+        main {
+            flex: 1;
+            padding-bottom: 3rem;
+        }
+        .bloque {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .bloque h2 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .bloque h2 i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        /* Equipo (sutil) */
+        .equipo {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1.2rem;
+            line-height: 1.7;
+        }
+        .equipo strong {
+            color: var(--primary);
+        }
+
+        /* Botones acción */
+        .acciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.8rem 0 1rem;
+            align-items: center;
+        }
+        .btn-desactivado {
+            background-color: #ccc;
+            color: #555;
+            border: none;
+            border-radius: 50px;
+            padding: 0.55rem 1.4rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: not-allowed;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+        .btn-guia {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.55rem 1.4rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-guia:hover {
+            background-color: #1e3a57;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .leyenda-botones {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 1rem;
+        }
+
+        .mail-consultas {
+            background-color: rgba(120, 166, 79, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #444;
+            margin: 1.2rem 0;
+        }
+        .mail-consultas a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Cronograma tabla */
+        .tabla-cronograma {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .tabla-cronograma th,
+        .tabla-cronograma td {
+            padding: 0.7rem 0.5rem;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        .tabla-cronograma th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-align: left;
+        }
+        .tabla-cronograma tr:nth-child(even) {
+            background-color: rgba(43, 76, 111, 0.03);
+        }
+
+        /* Acordeón */
+        .accordion-button {
+            font-weight: 600;
+            color: var(--primary);
+            background-color: var(--white);
+            padding: 1rem 1.2rem;
+            border: none;
+            box-shadow: none;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(120, 166, 79, 0.08);
+            color: var(--primary);
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(120, 166, 79, 0.3);
+        }
+        .accordion-item {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius) !important;
+            margin-bottom: 0.8rem;
+            overflow: hidden;
+        }
+        .accordion-body {
+            background-color: var(--white);
+            padding: 1.2rem 1.5rem;
+        }
+
+        .material-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(43, 76, 111, 0.06);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            text-decoration: none;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+        .material-link:hover {
+            background-color: rgba(43, 76, 111, 0.15);
+            color: var(--primary);
+        }
+
+        .video-container {
+            margin: 1rem 0;
+        }
+        .video-container iframe {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border-radius: 12px;
+            border: none;
+            box-shadow: var(--shadow);
+        }
+
+        /* Imágenes pequeñas */
+        .imagen-decorativa {
+            border-radius: 12px;
+            object-fit: cover;
+            width: 100%;
+            height: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .contenedor-imagenes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .contenedor-imagenes img {
+            width: calc(33.333% - 1rem);
+            min-width: 120px;
+            flex: 1 1 150px;
+            max-height: 180px;
+            object-fit: cover;
+        }
+
+        /* Nota campus */
+        .nota-campus {
+            background-color: rgba(43, 76, 111, 0.06);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .nota-campus i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-page h1 {
+                font-size: 1.8rem;
+            }
+            .bloque {
+                padding: 1.2rem;
+            }
+            .contenedor-imagenes img {
+                width: 100%;
+                max-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor donde se cargará el header (skip link + navbar) -->
+    <div id="header-container"></div>
+
+    <!-- ========== HERO / ENCABEZADO ========== -->
+    <header class="hero-page">
+        <div class="container">
+            <div class="etiqueta">Espacio complementario</div>
+            <h1>Gestión de Residuos en Comunas, Municipios y Zonas Rurales</h1>
+            <p class="lead">
+                Esta capacitación es impulsada por la <strong>Secretaría de Ambiente</strong>, con financiamiento del 
+                <strong>Consejo Federal de Inversiones (CFI)</strong>, y cuenta con el apoyo del 
+                <strong>Instituto de Formación Legislativa (IFL)</strong> y la <strong>Vicegobernación de la Provincia</strong>.
+            </p>
+
+            <!-- Nota campus -->
+            <div class="nota-campus">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>Página complementaria mientras el equipo técnico del Senado resuelve el campus virtual.</span>
+            </div>
+
+            <!-- Equipo de trabajo (sutil) -->
+            <div class="equipo">
+                <div><strong>Coordinación General:</strong> Cristina Goyenechea</div>
+                <div><strong>Equipo Técnico:</strong> Pablo Kriger | Iván Princic</div>
+                <div><strong>Equipo Docente:</strong> Claudia Kalinec, Gabriela Joubert, Guillermo Marchesi, Javier Manzo, Maximiliano Gómez, Pablo Nardone, Patricia Fernández, Renée Córdova, Rosa Hojman, Santiago Fernández Alonso, Walter Ordinas.</div>
+            </div>
+
+            <!-- Botones -->
+            <div class="acciones">
+                <span class="btn-desactivado" title="Se activará durante el horario de clases">
+                    <i class="fa-solid fa-video"></i> Ir al Zoom
+                </span>
+                <span class="btn-desactivado" title="Se activará durante el horario de clases">
+                    <i class="fa-solid fa-clipboard-check"></i> Registrar asistencia
+                </span>
+                <a href="https://drive.google.com/open?id=1H6Yvn6HYS7EfyRCRfoI8QqgiIwhtO3OA" 
+                   class="btn-guia" target="_blank" rel="noopener">
+                    <i class="fa-solid fa-book-open"></i> #Guía de cursado
+                </a>
+            </div>
+            <div class="leyenda-botones">
+                <i class="fa-regular fa-clock me-1"></i> Los botones de Zoom y asistencia se activarán durante el horario de clases (17 a 19 hs), los días lunes o jueves según el módulo.
+            </div>
+            <p class="mb-0" style="font-size:0.9rem; color:#666;">
+                La guía de cursado contiene toda la información pertinente, incluido el cronograma de clases.
+            </p>
+
+            <!-- Mail de consultas -->
+            <div class="mail-consultas">
+                <i class="fa-solid fa-envelope me-2"></i>
+                Consultas especiales (hasta que se resuelva el campus): 
+                <a href="mailto:formacion.residuos@gmail.com">formacion.residuos@gmail.com</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== MAIN ========== -->
+    <main id="main-content">
+        <div class="container">
+
+            <!-- CRONOGRAMA -->
+            <section class="bloque" aria-labelledby="titulo-cronograma">
+                <h2 id="titulo-cronograma">
+                    <i class="fa-solid fa-calendar-alt"></i> Cronograma
+                </h2>
+                <div class="table-responsive">
+                    <table class="tabla-cronograma">
+                        <thead>
+                            <tr>
+                                <th>MÓDULO</th>
+                                <th>FECHA</th>
+                                <th>Horario</th>
+                                <th>PROFESOR A CARGO</th>
+                                <th>CONTENIDOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Presentación</td>
+                                <td>24/08/2026</td>
+                                <td>15-17hs</td>
+                                <td>Ing. Cristina Goyenechea y Equipo Docente | Autoridades</td>
+                                <td>Presentación de docentes e introducción al Curso.</td>
+                            </tr>
+                            <tr>
+                                <td>Módulo I</td>
+                                <td>31/08/2026</td>
+                                <td>17-19hs</td>
+                                <td>Dr. Guillermo Marchesi<br>Dr. Osvaldo Fernández</td>
+                                <td>Marco Legal general para todas las corrientes de residuos.</td>
+                            </tr>
+                            <tr>
+                                <td>Módulo II</td>
+                                <td>07/09/2026</td>
+                                <td>17-19hs</td>
+                                <td>Arq. Santiago Fernando Alonso<br>Dr. Javier Manzo</td>
+                                <td>Planificación estratégica y diseño de Planes de Gestión Integral de Residuos Sólidos Urbanos.</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>10/09/2026</td>
+                                <td>17-19hs</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Módulo III</td>
+                                <td>14/09/2026</td>
+                                <td>17-19hs</td>
+                                <td>Arq. Santiago Fernando Alonso<br>Dr. Javier Manzo</td>
+                                <td>Infraestructura, Operación y Logística de los Sistemas de Gestión.</td>
+                            </tr>
+                            <tr>
+                                <td>Módulo IV</td>
+                                <td>21/09/2026</td>
+                                <td>17-19hs</td>
+                                <td>Lic. Claudia Kalinec<br>Ing. Gabriela Joubert</td>
+                                <td>Gestión de Corrientes Especiales, Peligrosos y de Manejo Diferenciado.</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>28/09/2026</td>
+                                <td>17-19hs</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Módulo V</td>
+                                <td>05/10/2026</td>
+                                <td>17-19hs</td>
+                                <td>Lic. Bioq. Pablo Nardone</td>
+                                <td>Regionalización y Gestión Intermunicipal.</td>
+                            </tr>
+                            <tr>
+                                <td>Módulo VI</td>
+                                <td>15/10/2026</td>
+                                <td>17-19hs</td>
+                                <td>Lic. Bioq. Pablo Nardone</td>
+                                <td>Gestión de Residuos de la Actividad Agropecuaria.</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>19/10/2026</td>
+                                <td>17-19hs</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Módulo VII</td>
+                                <td>26/10/2026</td>
+                                <td>17-19hs</td>
+                                <td>Ing. Patricia Fernández<br>Ing. Walter Ordinas</td>
+                                <td>Economía Circular, Valorización y Financiamiento.</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>02/11/2026</td>
+                                <td>17-19hs</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Módulo VIII</td>
+                                <td>09/11/2026</td>
+                                <td>17-19hs</td>
+                                <td>Lic. Renée Córdova</td>
+                                <td>Alternativas de Financiamiento y Soluciones Sectoriales.</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>16/11/2026</td>
+                                <td>17-19hs</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Módulo IX</td>
+                                <td>23/11/2026</td>
+                                <td>17-19hs</td>
+                                <td>Lic. Rosa Hojman</td>
+                                <td>Educación Ambiental, participación ciudadana e Inclusión Social.</td>
+                            </tr>
+                            <tr>
+                                <td>Módulo X</td>
+                                <td>26/11/2026</td>
+                                <td>17-19hs</td>
+                                <td>Lic. Maximiliano Gómez</td>
+                                <td>Prácticas: Estudio de Casos y Proyectos de Intervención.</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>30/11/2026</td>
+                                <td>17-19hs</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>03/12/2026</td>
+                                <td>17-19hs</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- MÓDULOS / ACORDEÓN -->
+            <section class="bloque" aria-labelledby="titulo-modulos">
+                <h2 id="titulo-modulos">
+                    <i class="fa-solid fa-folder-open"></i> Material por Módulo
+                </h2>
+                <div class="accordion" id="acordeonModulos">
+                    <!-- Presentación -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingPresentacion">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePresentacion" aria-expanded="false" aria-controls="collapsePresentacion">
+                                Presentación | 24/08/2026
+                            </button>
+                        </h2>
+                        <div id="collapsePresentacion" class="accordion-collapse collapse" aria-labelledby="headingPresentacion" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p><strong>Video de la clase grabada</strong></p>
+                                <div class="video-container">
+                                    <iframe src="https://www.youtube.com/embed/v_-f95E7ibE" title="Video presentación" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Módulo I -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod1" aria-expanded="false" aria-controls="collapseMod1">
+                                Módulo I | 31/08/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod1" class="accordion-collapse collapse" aria-labelledby="headingMod1" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p><strong>Video de la clase</strong></p>
+                                <div class="video-container">
+                                    <iframe src="https://www.youtube.com/embed/BPcCotpmLZg" title="Video Módulo I" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="mt-3"><strong>Bibliografía sugerida</strong></p>
+                                <a href="https://drive.google.com/open?id=1ZafhCVQcY2bf3fRIpW9jFrPYAy70CM3g" class="material-link" target="_blank" rel="noopener">
+                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Módulo II (abierto por defecto) -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod2">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod2" aria-expanded="true" aria-controls="collapseMod2">
+                                Módulo II | 07/09/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod2" class="accordion-collapse collapse show" aria-labelledby="headingMod2" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p><strong>Bibliografía general</strong> (no obligatoria, el docente indicará partes durante la clase)</p>
+                                <a href="https://drive.google.com/drive/folders/1fOX9LzxTSMg3U5rY-xVCXBGbsE-_v_w7" class="material-link" target="_blank" rel="noopener">
+                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
+                                </a>
+                                <p class="mt-3"><strong>Actividad del Módulo II</strong></p>
+                                <a href="https://redconsultor.github.io/curso/mod2/" class="material-link" target="_blank" rel="noopener">
+                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingresar a la actividad
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Módulo III -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod3" aria-expanded="false" aria-controls="collapseMod3">
+                                Módulo III | 14/09/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod3" class="accordion-collapse collapse" aria-labelledby="headingMod3" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p>Se compartirá la actividad del Módulo II, relacionada con mejorar el flujo de trabajos en la gestión de residuos.</p>
+                                <a href="https://redconsultor.github.io/curso/mod2/" class="material-link" target="_blank" rel="noopener">
+                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Acceder a la actividad
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Módulos IV a X sin material -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod4" aria-expanded="false" aria-controls="collapseMod4">
+                                Módulo IV | 21/09/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod4" class="accordion-collapse collapse" aria-labelledby="headingMod4" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Material disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod5" aria-expanded="false" aria-controls="collapseMod5">
+                                Módulo V | 05/10/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod5" class="accordion-collapse collapse" aria-labelledby="headingMod5" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Material disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod6">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod6" aria-expanded="false" aria-controls="collapseMod6">
+                                Módulo VI | 15/10/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod6" class="accordion-collapse collapse" aria-labelledby="headingMod6" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Material disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod7">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod7" aria-expanded="false" aria-controls="collapseMod7">
+                                Módulo VII | 26/10/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod7" class="accordion-collapse collapse" aria-labelledby="headingMod7" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Material disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod8">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod8" aria-expanded="false" aria-controls="collapseMod8">
+                                Módulo VIII | 09/11/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod8" class="accordion-collapse collapse" aria-labelledby="headingMod8" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Material disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod9">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod9" aria-expanded="false" aria-controls="collapseMod9">
+                                Módulo IX | 23/11/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod9" class="accordion-collapse collapse" aria-labelledby="headingMod9" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Material disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMod10">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod10" aria-expanded="false" aria-controls="collapseMod10">
+                                Módulo X | 26/11/2026
+                            </button>
+                        </h2>
+                        <div id="collapseMod10" class="accordion-collapse collapse" aria-labelledby="headingMod10" data-bs-parent="#acordeonModulos">
+                            <div class="accordion-body">
+                                <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Material disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Imágenes pequeñas decorativas -->
+            <div class="contenedor-imagenes">
+                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=400&auto=format&fit=crop" alt="Contenedores de reciclaje" class="imagen-decorativa" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=400&auto=format&fit=crop" alt="Residuos urbanos" class="imagen-decorativa" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1604187351574-c75ca79f5807?q=80&w=400&auto=format&fit=crop" alt="Planta de gestión de residuos" class="imagen-decorativa" loading="lazy">
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Contenedor donde se cargará el footer -->
+    <div id="footer-container"></div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para cargar header y footer desde elements/index.html -->
+    <script>
+        async function cargarElementos() {
+            try {
+                const respuesta = await fetch('elements/index.html');
+                if (!respuesta.ok) {
+                    throw new Error(`Error HTTP: ${respuesta.status}`);
+                }
+                const html = await respuesta.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Extraer el skip link y el navbar
+                const skipLink = doc.querySelector('.skip-link');
+                const navbar = doc.querySelector('nav');
+                const footer = doc.querySelector('footer');
+
+                if (skipLink && navbar) {
+                    document.getElementById('header-container').innerHTML = skipLink.outerHTML + navbar.outerHTML;
+                }
+                if (footer) {
+                    document.getElementById('footer-container').innerHTML = footer.outerHTML;
+                }
+
+                // Inicializar los dropdowns de Bootstrap después de insertar el navbar
+                const dropdownToggles = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+                dropdownToggles.forEach(toggle => {
+                    new bootstrap.Dropdown(toggle);
+                });
+            } catch (error) {
+                console.error('Error cargando elementos comunes:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', cargarElementos);
+    </script>
+</body>
+</html>
