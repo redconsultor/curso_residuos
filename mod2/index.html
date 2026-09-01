@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Módulo 2 - Actividad | Gestión de Residuos</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #F0F0E6;
+            --text: #3C3C3C;
+            --primary: #2B4C6F;
+            --accent: #78A64F;
+            --white: #ffffff;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: 0.3s ease;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            z-index: 2000;
+            border-radius: 0 0 8px 0;
+            text-decoration: none;
+        }
+        .skip-link:focus { left: 0; top: 0; }
+
+        .navbar {
+            background-color: var(--bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            padding: 0.8rem 0;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+        .navbar-brand i { font-size: 1.8rem; color: var(--accent); }
+        .nav-link {
+            font-weight: 500;
+            color: var(--text) !important;
+            transition: var(--transition);
+            padding: 0.5rem 1rem !important;
+        }
+        .nav-link:hover, .nav-link:focus {
+            color: var(--primary) !important;
+            background-color: rgba(43,76,111,0.06);
+            border-radius: 8px;
+        }
+        .dropdown-menu {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            padding: 0.5rem;
+            background: var(--white);
+        }
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        .dropdown-item:hover {
+            background-color: rgba(120,166,79,0.1);
+            color: var(--primary);
+        }
+        .dropdown-item.disabled-item {
+            opacity: 0.55;
+            pointer-events: none;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .badge-soon {
+            background-color: #e0e0e0;
+            color: #555;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .btn-campus {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.55rem 1.4rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-campus:hover {
+            background-color: #1e3a57;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(43,76,111,0.35);
+        }
+
+        .hero-page {
+            padding: 3rem 0 2rem;
+            background: linear-gradient(135deg, rgba(43,76,111,0.05), rgba(120,166,79,0.07));
+            border-bottom: 1px solid rgba(43,76,111,0.1);
+        }
+        .etiqueta {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        .hero-page h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .hero-page p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .login-card {
+            max-width: 450px;
+            margin: 2rem auto;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        .login-card h2 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .form-control {
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            padding: 0.7rem 1rem;
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.2rem rgba(120,166,79,0.15);
+        }
+
+        main {
+            flex: 1;
+            padding-bottom: 3rem;
+        }
+        .section-divider {
+            margin: 3rem 0;
+            border-top: 2px dashed rgba(43,76,111,0.2);
+            position: relative;
+        }
+        .section-divider span {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg);
+            padding: 0 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .bloque {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .bloque h2 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .bloque h2 i { color: var(--accent); }
+        .alerta-guardado {
+            background-color: rgba(243,156,18,0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .pregunta-item {
+            margin-bottom: 1.8rem;
+        }
+        .pregunta-item label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        .pregunta-item .ejemplo {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+
+        .btn-guardar {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 1.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-guardar:hover {
+            background-color: #5f8a3a;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .btn-outline-primary {
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .flow-container {
+            background: #faf9f4;
+            border: 2px dashed #ccc;
+            border-radius: var(--radius);
+            min-height: 500px;
+            position: relative;
+            overflow: auto;
+            padding: 20px;
+            margin-top: 1rem;
+        }
+        .flow-canvas {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-width: 800px;
+            min-height: 500px;
+        }
+
+        .task-node {
+            position: absolute;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 12px 14px;
+            min-width: 180px;
+            max-width: 250px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: grab;
+            transition: box-shadow 0.2s;
+            user-select: none;
+            touch-action: none;
+        }
+        .task-node:active {
+            cursor: grabbing;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .task-node .node-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .task-node .node-desc {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 4px;
+        }
+        .task-node .node-actores {
+            font-size: 0.8rem;
+            color: #777;
+            font-style: italic;
+        }
+        .task-node .color-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .node-actions {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            display: flex;
+            gap: 4px;
+            background: white;
+            border-radius: 20px;
+            padding: 2px 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+        .task-node:hover .node-actions,
+        .task-node:focus-within .node-actions,
+        .task-node.selected .node-actions {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .btn-node {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #666;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+        .btn-node:hover {
+            background: #f0f0f0;
+            color: var(--danger);
+        }
+
+        .task-node.tipo-descripcion {
+            border-radius: 50px;
+            background: #fefefe;
+            border: 2px dashed #78A64F;
+        }
+        .task-node.tipo-texto {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            cursor: text;
+        }
+        .task-node.tipo-texto .node-title {
+            color: #444;
+            font-weight: 400;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .color-option {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: 0.2s;
+        }
+        .color-option.active {
+            border-color: #333;
+            transform: scale(1.1);
+        }
+
+        .flow-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .flow-svg line, .flow-svg path {
+            stroke: #888;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+        .arrowhead {
+            fill: #888;
+        }
+
+        .spinner-overlay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+        .spinner-border-sm {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-width: 0.2em;
+        }
+
+        .evaluacion-box {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .evaluacion-nivel {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .nivel-aprobado { background: #e8f5e9; color: #2e7d32; }
+        .nivel-revisar1 { background: #fff3e0; color: #e65100; }
+        .nivel-revisar2 { background: #ffebee; color: #b71c1c; }
+        .nivel-sin-evaluar { background: #eceff1; color: #546e7a; }
+
+        @media (max-width: 768px) {
+            .hero-page h1 { font-size: 1.8rem; }
+            .bloque { padding: 1.5rem; }
+            .flow-container {
+                min-height: 400px;
+                overflow-x: auto;
+                overflow-y: auto;
+            }
+            .flow-canvas {
+                min-width: 1200px;
+                min-height: 500px;
+            }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <div id="header-container"></div>
+
+    <header class="hero-page">
+        <div class="container">
+            <div class="etiqueta">Actividad Módulo 2</div>
+            <h1>Flujo de Trabajo en la Gestión de Residuos</h1>
+            <p>Diseñá un modelo de gestión para tu localidad u organización</p>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <div class="container">
+            <section id="login-section" aria-label="Iniciar sesión">
+                <div class="login-card">
+                    <h2><i class="fa-solid fa-lock"></i> Acceso a la actividad</h2>
+                    <p class="text-muted mb-4">Ingresá con tu correo y contraseña de Moodle.</p>
+                    <div class="mb-3">
+                        <label for="login-email" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="login-email" placeholder="tucorreo@ejemplo.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="login-password" class="form-label">Contraseña (DNI)</label>
+                        <input type="password" class="form-control" id="login-password" placeholder="Tu DNI" required>
+                    </div>
+                    <button class="btn btn-guardar w-100" id="btn-login">
+                        <i class="fa-solid fa-right-to-bracket"></i> Entrar
+                    </button>
+                    <div id="login-spinner" class="spinner-overlay hidden">
+                        <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                        <span>Verificando credenciales...</span>
+                    </div>
+                    <div id="login-message" class="mt-3 text-center fw-semibold" style="color: var(--danger);"></div>
+                </div>
+            </section>
+
+            <section id="activity-content" class="hidden">
+                <!-- Actividad 1 -->
+                <div class="bloque" id="mod2_1">
+                    <div id="mod1-spinner" class="spinner-overlay hidden">
+                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        <span>Cargando actividad...</span>
+                    </div>
+                    <h2><i class="fa-solid fa-pen-to-square"></i> Actividad 1: Descriptiva</h2>
+                    <div class="alerta-guardado">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <strong>Espere unos segundos hasta que cargue sus datos.</strong> <p><strong>No olvide guardar sus avances antes de salir.</strong> No es posible recuperar ediciones anteriores luego de guardado.</p>
+                    </div>
+                    <p class="mb-4">En esta primera actividad te proponemos analizar la situación actual de la gestión de residuos en tu localidad, espacio u organización...</p>
+
+                    <div class="pregunta-item">
+                        <label for="pregunta1">1. ¿Qué tipo de residuos considerás necesario gestionar en tu localidad, espacio u organización?</label>
+                        <textarea class="form-control" id="pregunta1" rows="4" placeholder="Describí los tipos de residuos..."></textarea>
+                        <div class="ejemplo">Ej: residuos sólidos urbanos, plásticos, botellas, residuos peligrosos, hospitalarios, etc.</div>
+                    </div>
+                    <div class="pregunta-item">
+                        <label for="pregunta2">2. ¿De qué volumen estamos hablando? ¿Y cada cuánto tiempo?</label>
+                        <textarea class="form-control" id="pregunta2" rows="4" placeholder="Estimá cantidades y frecuencia..."></textarea>
+                        <div class="ejemplo">Ej: 1500 kg por día, 2 toneladas semanales, 10 m³ mensuales.</div>
+                    </div>
+                    <div class="pregunta-item">
+                        <label for="pregunta3">3. Formulá el problema que observás en la gestión de residuos actual y que los actores asociados deberían enfrentar.</label>
+                        <textarea class="form-control" id="pregunta3" rows="4" placeholder="Describí el problema central..."></textarea>
+                        <div class="ejemplo">Ej: Falta de equipamiento y coordinación entre áreas municipales, ineficiencia en recolección, falta de financiamiento, etc.</div>
+                    </div>
+                    <div class="pregunta-item">
+                        <label for="pregunta4">4. ¿De qué manera creés que sería factible mejorar, transformar o gestionar esa situación?</label>
+                        <textarea class="form-control" id="pregunta4" rows="4" placeholder="Proponé una estrategia..."></textarea>
+                        <div class="ejemplo">Ej: Implementar separación en origen, crear una planta de tratamiento, mejorar logística de recolección, alianzas público-privadas.</div>
+                    </div>
+
+                    <button class="btn btn-guardar" id="btn-guardar-mod1">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar Actividad 1
+                    </button>
+                    <div id="mod1-message" class="mt-2"></div>
+                </div>
+
+                <div class="section-divider"><span>Actividad 2</span></div>
+
+                <!-- Actividad 2 -->
+                <div class="bloque" id="mod2_2">
+                    <div id="mod2-spinner" class="spinner-overlay hidden">
+                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        <span>Cargando diagrama...</span>
+                    </div>
+                    <h2><i class="fa-solid fa-diagram-project"></i> Actividad 2: Propositiva - Diagrama de Flujo</h2>
+                    <div class="alerta-guardado">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <strong>Guardá periódicamente.</strong> Los cambios no se guardan automáticamente.
+                    </div>
+                    <p>En esta actividad vas a diseñar un diagrama de flujo que represente la solución propuesta para abordar el problema de gestión de residuos planteado en la actividad anterior...</p>
+
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <button class="btn btn-guardar" id="btn-add-task">
+                            <i class="fa-solid fa-plus"></i> Agregar tarea
+                        </button>
+                        <button class="btn btn-outline-primary" id="btn-save-flow">
+                            <i class="fa-solid fa-floppy-disk"></i> Guardar diagrama
+                        </button>
+                        <button class="btn btn-outline-secondary" id="btn-reset-flow">
+                            <i class="fa-solid fa-rotate-left"></i> Resetear
+                        </button>
+                    </div>
+                    <div id="flow-message"></div>
+
+                    <div class="flow-container" id="flow-container">
+                        <div class="flow-canvas" id="flow-canvas">
+                            <svg class="flow-svg" id="flow-svg">
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" class="arrowhead" />
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DE EVALUACIÓN (solo lectura) -->
+                <div class="bloque" id="evaluacion-usuario">
+                    <h2><i class="fa-solid fa-star"></i> Evaluación de tu trabajo</h2>
+                    <div class="evaluacion-box">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Comentarios del evaluador</label>
+                            <div id="evaluacion-texto-mostrar" class="p-2" style="white-space: pre-wrap;">Sin evaluación todavía.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nivel asignado</label>
+                            <div>
+                                <span id="evaluacion-nivel-mostrar" class="evaluacion-nivel nivel-sin-evaluar">Sin evaluar</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Destacado</label>
+                            <div id="evaluacion-destacado-mostrar">
+                                <i class="fa-regular fa-star text-muted"></i> No destacado
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón Imprimir / PDF -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-primary" id="btn-imprimir">
+                        <i class="fa-solid fa-print me-2"></i> Imprimir / Guardar como PDF
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <!-- MODAL TAREA -->
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 16px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskModalLabel">Nueva tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="task-tipo" class="form-label">Tipo de elemento</label>
+                        <select class="form-select" id="task-tipo">
+                            <option value="Tarea" selected>Tarea</option>
+                            <option value="Descripción">Descripción</option>
+                            <option value="Texto">Texto</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="task-title" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="task-title" placeholder="Nombre de la tarea" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="task-desc" class="form-label">Descripción breve</label>
+                        <textarea class="form-control" id="task-desc" rows="3" placeholder="¿En qué consiste?"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="task-actores" class="form-label">Actores implicados</label>
+                        <input type="text" class="form-control" id="task-actores" placeholder="Ej: municipalidad, vecinos, ONG, etc.">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Color</label>
+                        <div class="color-picker" id="color-picker"></div>
+                    </div>
+                    <input type="hidden" id="task-id" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-guardar" id="btn-save-task">Guardar tarea</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3uKKaN5p9VisQE7S_a4XoNH_p9qflfYR_lr-9fi_0KVM2bnNHBMW89TVUTHzZX8M/exec';
+        let usuarioActual = null;
+        let tareas = [];
+        let proximoId = 1;
+        let tareaEditando = null;
+        let nodoArrastrando = null;
+        let offsetX, offsetY;
+
+        const coloresDisponibles = ['#2B4C6F', '#78A64F', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#3498db', '#34495e', '#95a5a6'];
+
+        async function cargarElementos() {
+            try {
+                const respuesta = await fetch('../elements/index.html');
+                if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+                const html = await respuesta.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const skipLink = doc.querySelector('.skip-link');
+                const navbar = doc.querySelector('nav');
+                const footer = doc.querySelector('footer');
+                if (skipLink && navbar) document.getElementById('header-container').innerHTML = skipLink.outerHTML + navbar.outerHTML;
+                if (footer) document.getElementById('footer-container').innerHTML = footer.outerHTML;
+                document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(toggle => new bootstrap.Dropdown(toggle));
+            } catch (error) { console.error('Error cargando elementos comunes:', error); }
+        }
+
+        function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+        function mostrarMensaje(id, mensaje, tipo = 'success') {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.innerHTML = `<div class="alert alert-${tipo} py-2 px-3" style="border-radius: 10px;">${mensaje}</div>`;
+            setTimeout(() => el.innerHTML = '', 4000);
+        }
+
+        function inicializarColorPicker() {
+            const picker = document.getElementById('color-picker');
+            picker.innerHTML = '';
+            coloresDisponibles.forEach((color, index) => {
+                const div = document.createElement('div');
+                div.className = 'color-option' + (index === 0 ? ' active' : '');
+                div.style.backgroundColor = color;
+                div.dataset.color = color;
+                div.addEventListener('click', () => {
+                    picker.querySelectorAll('.color-option').forEach(op => op.classList.remove('active'));
+                    div.classList.add('active');
+                });
+                picker.appendChild(div);
+            });
+        }
+        function getColorSeleccionado() {
+            const active = document.querySelector('#color-picker .color-option.active');
+            return active ? active.dataset.color : coloresDisponibles[0];
+        }
+        function resetearColorPicker() {
+            const opciones = document.querySelectorAll('#color-picker .color-option');
+            opciones.forEach((op, i) => op.classList.toggle('active', i === 0));
+        }
+
+        // Login
+        document.getElementById('btn-login').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const dni = document.getElementById('login-password').value.trim();
+            if (!email || !dni) { mostrarMensaje('login-message', 'Por favor completá ambos campos.', 'danger'); return; }
+            document.getElementById('login-spinner').classList.remove('hidden');
+            document.getElementById('btn-login').disabled = true;
+            try {
+                const body = new URLSearchParams({ action: 'login', correo: email, dni });
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const data = await resp.json();
+                if (data.success) {
+                    usuarioActual = { correo: email, dni };
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('activity-content').classList.remove('hidden');
+                    cargarActividad1();
+                    cargarActividad2();
+                } else {
+                    mostrarMensaje('login-message', data.message || 'Credenciales incorrectas.', 'danger');
+                }
+            } catch (err) {
+                console.error(err);
+                mostrarMensaje('login-message', 'Error de conexión con el servidor.', 'danger');
+            } finally {
+                document.getElementById('login-spinner').classList.add('hidden');
+                document.getElementById('btn-login').disabled = false;
+            }
+        });
+
+        async function cargarActividad1() {
+            if (!usuarioActual) return;
+            document.getElementById('mod1-spinner').classList.remove('hidden');
+            try {
+                const body = new URLSearchParams({ action: 'getMod1', correo: usuarioActual.correo, dni: usuarioActual.dni });
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const data = await resp.json();
+                if (data.success && data.data) {
+                    document.getElementById('pregunta1').value = data.data.pregunta1 || '';
+                    document.getElementById('pregunta2').value = data.data.pregunta2 || '';
+                    document.getElementById('pregunta3').value = data.data.pregunta3 || '';
+                    document.getElementById('pregunta4').value = data.data.pregunta4 || '';
+                }
+            } catch (err) { console.error('Error cargando actividad 1:', err); }
+            finally { document.getElementById('mod1-spinner').classList.add('hidden'); }
+        }
+
+        document.getElementById('btn-guardar-mod1').addEventListener('click', async () => {
+            if (!usuarioActual) return;
+            const p1 = document.getElementById('pregunta1').value.trim();
+            const p2 = document.getElementById('pregunta2').value.trim();
+            const p3 = document.getElementById('pregunta3').value.trim();
+            const p4 = document.getElementById('pregunta4').value.trim();
+            if (!p1 || !p2 || !p3 || !p4) { mostrarMensaje('mod1-message', 'Todos los campos son obligatorios.', 'warning'); return; }
+            const body = new URLSearchParams({ action: 'saveMod1', correo: usuarioActual.correo, dni: usuarioActual.dni, pregunta1: p1, pregunta2: p2, pregunta3: p3, pregunta4: p4 });
+            try {
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const data = await resp.json();
+                if (data.success) mostrarMensaje('mod1-message', 'Actividad 1 guardada correctamente.', 'success');
+                else mostrarMensaje('mod1-message', data.message || 'Error al guardar.', 'danger');
+            } catch (err) { console.error(err); mostrarMensaje('mod1-message', 'Error de conexión.', 'danger'); }
+        });
+
+        // --- Actividad 2 ---
+        document.getElementById('btn-add-task').addEventListener('click', () => {
+            tareaEditando = null;
+            document.getElementById('taskModalLabel').textContent = 'Nueva tarea';
+            document.getElementById('task-title').value = '';
+            document.getElementById('task-desc').value = '';
+            document.getElementById('task-actores').value = '';
+            document.getElementById('task-tipo').value = 'Tarea';
+            resetearColorPicker();
+            document.getElementById('task-id').value = '';
+            new bootstrap.Modal(document.getElementById('taskModal')).show();
+        });
+
+        document.getElementById('btn-save-task').addEventListener('click', () => {
+            const titulo = document.getElementById('task-title').value.trim();
+            const desc = document.getElementById('task-desc').value.trim();
+            const actores = document.getElementById('task-actores').value.trim();
+            const color = getColorSeleccionado();
+            const tipo = document.getElementById('task-tipo').value;
+            if (!titulo) { alert('El título es obligatorio.'); return; }
+            const taskId = document.getElementById('task-id').value;
+            if (taskId) {
+                const tarea = tareas.find(t => t.id === parseInt(taskId));
+                if (tarea) { tarea.titulo = titulo; tarea.descripcion = desc; tarea.actores = actores; tarea.color = color; tarea.tipo = tipo; }
+            } else {
+                const nuevaTarea = { id: proximoId++, titulo, descripcion: desc, actores, color, tipo, x: 50 + Math.random() * 200, y: 50 + Math.random() * 200, conexionesSalientes: [] };
+                tareas.push(nuevaTarea);
+            }
+            renderizarDiagrama();
+            bootstrap.Modal.getInstance(document.getElementById('taskModal')).hide();
+        });
+
+        function renderizarDiagrama() {
+            const canvas = document.getElementById('flow-canvas');
+            const svg = document.getElementById('flow-svg');
+            canvas.querySelectorAll('.task-node').forEach(n => n.remove());
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            defs.innerHTML = `<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" class="arrowhead" /></marker>`;
+            svg.appendChild(defs);
+
+            tareas.forEach(tarea => {
+                tarea.conexionesSalientes.forEach(idDestino => {
+                    const destino = tareas.find(t => t.id === idDestino);
+                    if (!destino) return;
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', tarea.x + 100);
+                    line.setAttribute('y1', tarea.y + 40);
+                    line.setAttribute('x2', destino.x + 100);
+                    line.setAttribute('y2', destino.y + 40);
+                    line.setAttribute('marker-end', 'url(#arrowhead)');
+                    svg.appendChild(line);
+                });
+            });
+
+            tareas.forEach(tarea => {
+                const nodo = document.createElement('div');
+                nodo.className = 'task-node';
+                if (tarea.tipo === 'Descripción') nodo.classList.add('tipo-descripcion');
+                if (tarea.tipo === 'Texto') nodo.classList.add('tipo-texto');
+                nodo.style.left = tarea.x + 'px';
+                nodo.style.top = tarea.y + 'px';
+                nodo.style.borderColor = tarea.color;
+                nodo.dataset.id = tarea.id;
+                const colorDotHTML = tarea.tipo === 'Texto' ? '' : `<span class="color-dot" style="background:${tarea.color}"></span>`;
+                nodo.innerHTML = `
+                    <div class="node-actions">
+                        <button class="btn-node btn-edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn-node btn-connect" title="Conectar a..."><i class="fa-solid fa-link"></i></button>
+                        <button class="btn-node btn-delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <div class="node-title">${colorDotHTML}${escapeHtml(tarea.titulo)}</div>
+                    <div class="node-desc">${escapeHtml(tarea.descripcion)}</div>
+                    <div class="node-actores">${escapeHtml(tarea.actores)}</div>
+                `;
+                nodo.addEventListener('mousedown', e => iniciarArrastre(e, tarea.id));
+                nodo.addEventListener('touchstart', e => iniciarArrastreTouch(e, tarea.id), { passive: false });
+                nodo.querySelector('.btn-edit').addEventListener('click', e => { e.stopPropagation(); editarTarea(tarea.id); });
+                nodo.querySelector('.btn-connect').addEventListener('click', e => { e.stopPropagation(); conectarTarea(tarea.id); });
+                nodo.querySelector('.btn-delete').addEventListener('click', e => { e.stopPropagation(); eliminarTarea(tarea.id); });
+                canvas.appendChild(nodo);
+            });
+        }
+
+        function iniciarArrastre(e, id) {
+            const nodo = document.querySelector(`.task-node[data-id="${id}"]`);
+            if (!nodo) return;
+            nodoArrastrando = id;
+            const rect = nodo.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            document.addEventListener('mousemove', moverArrastre);
+            document.addEventListener('mouseup', terminarArrastre);
+            e.preventDefault();
+        }
+        function iniciarArrastreTouch(e, id) {
+            const touch = e.touches[0];
+            const nodo = document.querySelector(`.task-node[data-id="${id}"]`);
+            if (!nodo) return;
+            nodoArrastrando = id;
+            const rect = nodo.getBoundingClientRect();
+            offsetX = touch.clientX - rect.left;
+            offsetY = touch.clientY - rect.top;
+            document.addEventListener('touchmove', moverArrastreTouch, { passive: false });
+            document.addEventListener('touchend', terminarArrastreTouch);
+            e.preventDefault();
+        }
+        function moverArrastre(e) {
+            if (!nodoArrastrando) return;
+            const canvas = document.getElementById('flow-canvas');
+            const rect = canvas.getBoundingClientRect();
+            const tarea = tareas.find(t => t.id === nodoArrastrando);
+            if (!tarea) return;
+            let nuevoX = e.clientX - rect.left - offsetX;
+            let nuevoY = e.clientY - rect.top - offsetY;
+            nuevoX = Math.max(0, Math.min(nuevoX, canvas.scrollWidth - 200));
+            nuevoY = Math.max(0, Math.min(nuevoY, canvas.scrollHeight - 100));
+            tarea.x = nuevoX;
+            tarea.y = nuevoY;
+            renderizarDiagrama();
+            const nodo = document.querySelector(`.task-node[data-id="${nodoArrastrando}"]`);
+            if (nodo) nodo.classList.add('dragging');
+        }
+        function moverArrastreTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            moverArrastre({ clientX: touch.clientX, clientY: touch.clientY });
+        }
+        function terminarArrastre() {
+            nodoArrastrando = null;
+            document.removeEventListener('mousemove', moverArrastre);
+            document.removeEventListener('mouseup', terminarArrastre);
+            document.querySelectorAll('.task-node.dragging').forEach(n => n.classList.remove('dragging'));
+        }
+        function terminarArrastreTouch() {
+            nodoArrastrando = null;
+            document.removeEventListener('touchmove', moverArrastreTouch);
+            document.removeEventListener('touchend', terminarArrastreTouch);
+            document.querySelectorAll('.task-node.dragging').forEach(n => n.classList.remove('dragging'));
+        }
+
+        function editarTarea(id) {
+            const tarea = tareas.find(t => t.id === id);
+            if (!tarea) return;
+            tareaEditando = tarea;
+            document.getElementById('taskModalLabel').textContent = 'Editar tarea';
+            document.getElementById('task-title').value = tarea.titulo;
+            document.getElementById('task-desc').value = tarea.descripcion;
+            document.getElementById('task-actores').value = tarea.actores;
+            document.getElementById('task-tipo').value = tarea.tipo || 'Tarea';
+            document.getElementById('task-id').value = tarea.id;
+            document.querySelectorAll('#color-picker .color-option').forEach(op => {
+                op.classList.toggle('active', op.dataset.color === tarea.color);
+            });
+            new bootstrap.Modal(document.getElementById('taskModal')).show();
+        }
+
+        function eliminarTarea(id) {
+            if (!confirm('¿Eliminar esta tarea?')) return;
+            tareas = tareas.filter(t => t.id !== id);
+            tareas.forEach(t => { t.conexionesSalientes = t.conexionesSalientes.filter(pid => pid !== id); });
+            renderizarDiagrama();
+        }
+
+        function conectarTarea(idOrigen) {
+            const tareasDisponibles = tareas.filter(t => t.id !== idOrigen);
+            if (tareasDisponibles.length === 0) { alert('No hay otras tareas para conectar.'); return; }
+            const lista = tareasDisponibles.map(t => `${t.id}: ${t.titulo}`).join('\n');
+            const entrada = prompt(`Indique el o los IDs de las tareas destino separados por coma (ej: 1,3,5):\n\n${lista}`);
+            if (!entrada) return;
+            const idsTexto = entrada.split(',');
+            const destinoIds = [];
+            idsTexto.forEach(idStr => {
+                const id = parseInt(idStr.trim(), 10);
+                if (!isNaN(id) && tareasDisponibles.some(t => t.id === id)) destinoIds.push(id);
+            });
+            if (destinoIds.length === 0) { alert('Ningún ID ingresado es válido. Intente nuevamente.'); return; }
+            const origen = tareas.find(t => t.id === idOrigen);
+            destinoIds.forEach(destinoId => {
+                if (!origen.conexionesSalientes.includes(destinoId)) origen.conexionesSalientes.push(destinoId);
+            });
+            renderizarDiagrama();
+        }
+
+        document.getElementById('btn-save-flow').addEventListener('click', async () => {
+            if (!usuarioActual) return;
+            if (tareas.length === 0) { mostrarMensaje('flow-message', 'No hay tareas para guardar.', 'warning'); return; }
+            const data = tareas.map(t => ({ id: t.id, titulo: t.titulo, descripcion: t.descripcion, actores: t.actores, color: t.color, tipo: t.tipo || 'Tarea', x: t.x, y: t.y, conexiones: t.conexionesSalientes }));
+            const body = new URLSearchParams({ action: 'saveMod2', correo: usuarioActual.correo, dni: usuarioActual.dni, data: JSON.stringify(data) });
+            try {
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const result = await resp.json();
+                if (result.success) mostrarMensaje('flow-message', 'Diagrama guardado correctamente.', 'success');
+                else mostrarMensaje('flow-message', result.message || 'Error al guardar.', 'danger');
+            } catch (err) { console.error(err); mostrarMensaje('flow-message', 'Error de conexión.', 'danger'); }
+        });
+
+        async function cargarActividad2() {
+            if (!usuarioActual) return;
+            document.getElementById('mod2-spinner').classList.remove('hidden');
+            try {
+                const body = new URLSearchParams({ action: 'getMod2', correo: usuarioActual.correo, dni: usuarioActual.dni });
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const result = await resp.json();
+                if (result.success && result.data) {
+                    tareas = result.data.map(t => ({ id: t.id, titulo: t.titulo, descripcion: t.descripcion, actores: t.actores, color: t.color, tipo: t.tipo || 'Tarea', x: t.x, y: t.y, conexionesSalientes: t.conexiones || [] }));
+                    proximoId = Math.max(...tareas.map(t => t.id), 0) + 1;
+                    renderizarDiagrama();
+                }
+                // Actualizar evaluación
+                document.getElementById('evaluacion-texto-mostrar').textContent = result.evaluacion || 'Sin evaluación todavía.';
+                const nivelSpan = document.getElementById('evaluacion-nivel-mostrar');
+                nivelSpan.textContent = result.nivel || 'Sin evaluar';
+                nivelSpan.className = 'evaluacion-nivel';
+                if (result.nivel === 'Aprobado') nivelSpan.classList.add('nivel-aprobado');
+                else if (result.nivel === 'Revisar I') nivelSpan.classList.add('nivel-revisar1');
+                else if (result.nivel === 'Revisar II') nivelSpan.classList.add('nivel-revisar2');
+                else nivelSpan.classList.add('nivel-sin-evaluar');
+                const destDiv = document.getElementById('evaluacion-destacado-mostrar');
+                if (result.destacado === true || result.destacado === 'true' || result.destacado === 'TRUE') {
+                    destDiv.innerHTML = '<i class="fa-solid fa-star text-warning"></i> Destacado';
+                } else {
+                    destDiv.innerHTML = '<i class="fa-regular fa-star text-muted"></i> No destacado';
+                }
+            } catch (err) { console.error('Error cargando actividad 2:', err); }
+            finally { document.getElementById('mod2-spinner').classList.add('hidden'); }
+        }
+
+        document.getElementById('btn-reset-flow').addEventListener('click', () => {
+            if (!confirm('¿Seguro que querés limpiar el diagrama sin guardar?')) return;
+            tareas = [];
+            proximoId = 1;
+            renderizarDiagrama();
+        });
+
+        document.getElementById('btn-imprimir').addEventListener('click', () => { window.print(); });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarElementos();
+            inicializarColorPicker();
+        });
+    </script>
+</body>
+</html>
