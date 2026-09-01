@@ -196,23 +196,6 @@
             flex: 1;
             padding-bottom: 3rem;
         }
-        .section-divider {
-            margin: 3rem 0;
-            border-top: 2px dashed rgba(43,76,111,0.2);
-            position: relative;
-        }
-        .section-divider span {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg);
-            padding: 0 1rem;
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
         .bloque {
             background: var(--white);
             border-radius: var(--radius);
@@ -284,6 +267,35 @@
         .btn-outline-primary:hover {
             background-color: var(--primary);
             color: white;
+        }
+
+        /* Acordeón */
+        .accordion-button {
+            font-weight: 600;
+            color: var(--primary);
+            background-color: var(--white);
+            padding: 1.2rem 1.5rem;
+            border: none;
+            box-shadow: none;
+            font-size: 1.2rem;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(120,166,79,0.08);
+            color: var(--primary);
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(120,166,79,0.3);
+        }
+        .accordion-item {
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: var(--radius) !important;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .accordion-body {
+            background-color: var(--white);
+            padding: 1.5rem;
         }
 
         .flow-container {
@@ -472,6 +484,43 @@
         .nivel-revisar2 { background: #ffebee; color: #b71c1c; }
         .nivel-sin-evaluar { background: #eceff1; color: #546e7a; }
 
+        /* Estilos para la tabla editable vertical */
+        .tabla-editable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .tabla-editable th, .tabla-editable td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .tabla-editable th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        .tabla-editable .campo {
+            background-color: rgba(43, 76, 111, 0.05);
+            font-weight: 600;
+            width: 200px;
+        }
+        .tabla-editable input, .tabla-editable textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 0.85rem;
+            padding: 4px;
+            resize: vertical;
+        }
+        .tabla-editable input::placeholder, .tabla-editable textarea::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .hidden { display: none !important; }
+
         @media (max-width: 768px) {
             .hero-page h1 { font-size: 1.8rem; }
             .bloque { padding: 1.5rem; }
@@ -484,9 +533,14 @@
                 min-width: 1200px;
                 min-height: 500px;
             }
+            .tabla-editable .campo {
+                width: 120px;
+                font-size: 0.75rem;
+            }
+            .tabla-editable input, .tabla-editable textarea {
+                font-size: 0.75rem;
+            }
         }
-
-        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -528,85 +582,148 @@
             </section>
 
             <section id="activity-content" class="hidden">
-                <!-- Actividad 1 -->
-                <div class="bloque" id="mod2_1">
-                    <div id="mod1-spinner" class="spinner-overlay hidden">
-                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        <span>Cargando actividad...</span>
-                    </div>
-                    <h2><i class="fa-solid fa-pen-to-square"></i> Actividad 1: Descriptiva</h2>
-                    <div class="alerta-guardado">
-                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
-                        <strong>Espere unos segundos hasta que cargue sus datos.</strong> <p><strong>No olvide guardar sus avances antes de salir.</strong> No es posible recuperar ediciones anteriores luego de guardado.</p>
-                    </div>
-                    <p class="mb-4">En esta primera actividad te proponemos analizar la situación actual de la gestión de residuos en tu localidad, espacio u organización...</p>
+                <!-- Acordeón de actividades -->
+                <div class="accordion" id="accordionActividades">
 
-                    <div class="pregunta-item">
-                        <label for="pregunta1">1. ¿Qué tipo de residuos considerás necesario gestionar en tu localidad, espacio u organización?</label>
-                        <textarea class="form-control" id="pregunta1" rows="4" placeholder="Describí los tipos de residuos..."></textarea>
-                        <div class="ejemplo">Ej: residuos sólidos urbanos, plásticos, botellas, residuos peligrosos, hospitalarios, etc.</div>
-                    </div>
-                    <div class="pregunta-item">
-                        <label for="pregunta2">2. ¿De qué volumen estamos hablando? ¿Y cada cuánto tiempo?</label>
-                        <textarea class="form-control" id="pregunta2" rows="4" placeholder="Estimá cantidades y frecuencia..."></textarea>
-                        <div class="ejemplo">Ej: 1500 kg por día, 2 toneladas semanales, 10 m³ mensuales.</div>
-                    </div>
-                    <div class="pregunta-item">
-                        <label for="pregunta3">3. Formulá el problema que observás en la gestión de residuos actual y que los actores asociados deberían enfrentar.</label>
-                        <textarea class="form-control" id="pregunta3" rows="4" placeholder="Describí el problema central..."></textarea>
-                        <div class="ejemplo">Ej: Falta de equipamiento y coordinación entre áreas municipales, ineficiencia en recolección, falta de financiamiento, etc.</div>
-                    </div>
-                    <div class="pregunta-item">
-                        <label for="pregunta4">4. ¿De qué manera creés que sería factible mejorar, transformar o gestionar esa situación?</label>
-                        <textarea class="form-control" id="pregunta4" rows="4" placeholder="Proponé una estrategia..."></textarea>
-                        <div class="ejemplo">Ej: Implementar separación en origen, crear una planta de tratamiento, mejorar logística de recolección, alianzas público-privadas.</div>
-                    </div>
+                    <!-- Actividad 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingAct1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAct1" aria-expanded="false" aria-controls="collapseAct1">
+                                <i class="fa-solid fa-pen-to-square me-2"></i> Actividad 1: Descriptiva
+                            </button>
+                        </h2>
+                        <div id="collapseAct1" class="accordion-collapse collapse" aria-labelledby="headingAct1" data-bs-parent="#accordionActividades">
+                            <div class="accordion-body">
+                                <div id="mod1-spinner" class="spinner-overlay hidden">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                    <span>Cargando actividad...</span>
+                                </div>
+                                <div class="alerta-guardado">
+                                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                                    <strong>Espere unos segundos hasta que cargue sus datos.</strong> <p><strong>No olvide guardar sus avances antes de salir.</strong> No es posible recuperar ediciones anteriores luego de guardado.</p>
+                                </div>
+                                <p class="mb-4">En esta primera actividad te proponemos analizar la situación actual de la gestión de residuos en tu localidad, espacio u organización...</p>
 
-                    <button class="btn btn-guardar" id="btn-guardar-mod1">
-                        <i class="fa-solid fa-floppy-disk"></i> Guardar Actividad 1
-                    </button>
-                    <div id="mod1-message" class="mt-2"></div>
-                </div>
+                                <div class="pregunta-item">
+                                    <label for="pregunta1">1. ¿Qué tipo de residuos considerás necesario gestionar en tu localidad, espacio u organización?</label>
+                                    <textarea class="form-control" id="pregunta1" rows="4" placeholder="Describí los tipos de residuos..."></textarea>
+                                    <div class="ejemplo">Ej: residuos sólidos urbanos, plásticos, botellas, residuos peligrosos, hospitalarios, etc.</div>
+                                </div>
+                                <div class="pregunta-item">
+                                    <label for="pregunta2">2. ¿De qué volumen estamos hablando? ¿Y cada cuánto tiempo?</label>
+                                    <textarea class="form-control" id="pregunta2" rows="4" placeholder="Estimá cantidades y frecuencia..."></textarea>
+                                    <div class="ejemplo">Ej: 1500 kg por día, 2 toneladas semanales, 10 m³ mensuales.</div>
+                                </div>
+                                <div class="pregunta-item">
+                                    <label for="pregunta3">3. Formulá el problema que observás en la gestión de residuos actual y que los actores asociados deberían enfrentar.</label>
+                                    <textarea class="form-control" id="pregunta3" rows="4" placeholder="Describí el problema central..."></textarea>
+                                    <div class="ejemplo">Ej: Falta de equipamiento y coordinación entre áreas municipales, ineficiencia en recolección, falta de financiamiento, etc.</div>
+                                </div>
+                                <div class="pregunta-item">
+                                    <label for="pregunta4">4. ¿De qué manera creés que sería factible mejorar, transformar o gestionar esa situación?</label>
+                                    <textarea class="form-control" id="pregunta4" rows="4" placeholder="Proponé una estrategia..."></textarea>
+                                    <div class="ejemplo">Ej: Implementar separación en origen, crear una planta de tratamiento, mejorar logística de recolección, alianzas público-privadas.</div>
+                                </div>
 
-                <div class="section-divider"><span>Actividad 2</span></div>
-
-                <!-- Actividad 2 -->
-                <div class="bloque" id="mod2_2">
-                    <div id="mod2-spinner" class="spinner-overlay hidden">
-                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        <span>Cargando diagrama...</span>
-                    </div>
-                    <h2><i class="fa-solid fa-diagram-project"></i> Actividad 2: Propositiva - Diagrama de Flujo</h2>
-                    <div class="alerta-guardado">
-                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
-                        <strong>Guardá periódicamente.</strong> Los cambios no se guardan automáticamente.
-                    </div>
-                    <p>En esta actividad vas a diseñar un diagrama de flujo que represente la solución propuesta para abordar el problema de gestión de residuos planteado en la actividad anterior...</p>
-
-                    <div class="d-flex flex-wrap gap-2 mb-3">
-                        <button class="btn btn-guardar" id="btn-add-task">
-                            <i class="fa-solid fa-plus"></i> Agregar tarea
-                        </button>
-                        <button class="btn btn-outline-primary" id="btn-save-flow">
-                            <i class="fa-solid fa-floppy-disk"></i> Guardar diagrama
-                        </button>
-                        <button class="btn btn-outline-secondary" id="btn-reset-flow">
-                            <i class="fa-solid fa-rotate-left"></i> Resetear
-                        </button>
-                    </div>
-                    <div id="flow-message"></div>
-
-                    <div class="flow-container" id="flow-container">
-                        <div class="flow-canvas" id="flow-canvas">
-                            <svg class="flow-svg" id="flow-svg">
-                                <defs>
-                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                                        <polygon points="0 0, 10 3.5, 0 7" class="arrowhead" />
-                                    </marker>
-                                </defs>
-                            </svg>
+                                <button class="btn btn-guardar" id="btn-guardar-mod1">
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar Actividad 1
+                                </button>
+                                <div id="mod1-message" class="mt-2"></div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Actividad 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingAct2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAct2" aria-expanded="false" aria-controls="collapseAct2">
+                                <i class="fa-solid fa-diagram-project me-2"></i> Actividad 2: Propositiva - Diagrama de Flujo
+                            </button>
+                        </h2>
+                        <div id="collapseAct2" class="accordion-collapse collapse" aria-labelledby="headingAct2" data-bs-parent="#accordionActividades">
+                            <div class="accordion-body">
+                                <div id="mod2-spinner" class="spinner-overlay hidden">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                    <span>Cargando diagrama...</span>
+                                </div>
+                                <div class="alerta-guardado">
+                                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                                    <strong>Guardá periódicamente.</strong> Los cambios no se guardan automáticamente.
+                                </div>
+                                <p>En esta actividad vas a diseñar un diagrama de flujo que represente la solución propuesta para abordar el problema de gestión de residuos planteado en la actividad anterior...</p>
+
+                                <div class="d-flex flex-wrap gap-2 mb-3">
+                                    <button class="btn btn-guardar" id="btn-add-task">
+                                        <i class="fa-solid fa-plus"></i> Agregar tarea
+                                    </button>
+                                    <button class="btn btn-outline-primary" id="btn-save-flow">
+                                        <i class="fa-solid fa-floppy-disk"></i> Guardar diagrama
+                                    </button>
+                                    <button class="btn btn-outline-secondary" id="btn-reset-flow">
+                                        <i class="fa-solid fa-rotate-left"></i> Resetear
+                                    </button>
+                                </div>
+                                <div id="flow-message"></div>
+
+                                <div class="flow-container" id="flow-container">
+                                    <div class="flow-canvas" id="flow-canvas">
+                                        <svg class="flow-svg" id="flow-svg">
+                                            <defs>
+                                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                                    <polygon points="0 0, 10 3.5, 0 7" class="arrowhead" />
+                                                </marker>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actividad 3 (Tabla editable vertical) -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingAct3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAct3" aria-expanded="false" aria-controls="collapseAct3">
+                                <i class="fa-solid fa-table me-2"></i> Actividad 3: Tabla de Datos
+                            </button>
+                        </h2>
+                        <div id="collapseAct3" class="accordion-collapse collapse" aria-labelledby="headingAct3" data-bs-parent="#accordionActividades">
+                            <div class="accordion-body">
+                                <div id="mod3-spinner" class="spinner-overlay hidden">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                    <span>Cargando tabla...</span>
+                                </div>
+                                <div class="alerta-guardado">
+                                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                                    <strong>Complete los campos con sus propios datos.</strong> Los ejemplos aparecen en gris; al escribir desaparecerán. Guarde antes de salir.
+                                </div>
+                                <p>Complete la siguiente tabla con la información correspondiente a su proyecto de gestión de residuos. Los datos de ejemplo son orientativos.</p>
+
+                                <!-- Tabla editable vertical -->
+                                <div class="table-responsive">
+                                    <table class="tabla-editable" id="tabla-editable">
+                                        <thead>
+                                            <tr>
+                                                <th>Campo</th>
+                                                <th>Ejemplo 1</th>
+                                                <th>Ejemplo 2</th>
+                                                <th>Ejemplo 3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-body">
+                                            <!-- Filas generadas por JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <button class="btn btn-guardar mt-3" id="btn-guardar-mod3">
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar Tabla
+                                </button>
+                                <div id="mod3-message" class="mt-2"></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- SECCIÓN DE EVALUACIÓN (solo lectura) -->
@@ -690,7 +807,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3uKKaN5p9VisQE7S_a4XoNH_p9qflfYR_lr-9fi_0KVM2bnNHBMW89TVUTHzZX8M/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwod9xLof-O2_IoyxzUaneMf1ATvbR2B5--2A9RX2a0dE1e3QoGycYpdVDhlDbzkdg/exec';
         let usuarioActual = null;
         let tareas = [];
         let proximoId = 1;
@@ -699,6 +816,85 @@
         let offsetX, offsetY;
 
         const coloresDisponibles = ['#2B4C6F', '#78A64F', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#3498db', '#34495e', '#95a5a6'];
+
+        // Datos de ejemplo para la tabla (Actividad 3) - ahora en estructura vertical
+        const datosEjemploTabla = [
+            { campo: 'Generación - Cantidad', valor: '110' },
+            { campo: 'Generación - Unidad de medida', valor: 'Toneladas diarias' },
+            { campo: 'Generación - Observaciones', valor: 'Caracterización: 50 T/día reciclables + 50 T/día orgánicos + 10 T/día rechazo' },
+            { campo: 'Recolección - Cantidad', valor: '2 camiones' },
+            { campo: 'Recolección - Tipo', valor: '1 de 7tn cola de pato + 1 de 7tn volcador' },
+            { campo: 'Recolección - Frecuencia', valor: 'Cola de pato semanal para rechazo. 2 x semana volcador orgánicos. 2 x semana reciclables' },
+            { campo: 'Recolección - Observaciones', valor: 'Con 2 camiones no se opera sábados. (Econovo/Ombú?)' },
+            { campo: 'Transporte - Tipo', valor: 'bici carros + carros eléctricos' },
+            { campo: 'Transporte - Frecuencia', valor: 'diaria' },
+            { campo: 'Transporte - Observaciones', valor: 'Solo para grandes generadores/cooperativas' },
+            { campo: 'Pretratamiento - Fracción', valor: 'Separación en planta' },
+            { campo: 'Pretratamiento - %', valor: '50/110' },
+            { campo: 'Pretratamiento - Observaciones', valor: 'Considerar gestión de AVUS/RAEEs/Fitosanitarios y otras fracciones posibles' },
+            { campo: 'Higiene urbana - Tipo', valor: 'Barrido manual' },
+            { campo: 'Higiene urbana - Frecuencia', valor: 'días hábiles' },
+            { campo: 'Higiene urbana - Observaciones', valor: 'Con 2 cuadrillas no se opera sábados.' },
+            { campo: 'Tratamiento - Fracción', valor: 'reciclables' },
+            { campo: 'Tratamiento - Proceso', valor: 'enfardado en balas y pelletizado para comercialización' },
+            { campo: 'Tratamiento - Destino', valor: '' },
+            { campo: 'Disposición - Tn/mes', valor: '2420' },
+            { campo: 'Disposición - Vida útil', valor: '145200 tn = 5 años' },
+            { campo: 'Disposición - Observaciones', valor: 'Actualmente basural, que comprende remediación y regionalización del mismo. 5 municipios de iguales características. 1 año de obra + 1 año de cierre. Evaluar nuevo modulo a los 3 años' },
+            { campo: 'Factibilidad', valor: 'Conseguir financiamiento para equipos, obra y mantenimiento del relleno. Financiamiento para camiones recolectores y equipos de higiene urbana. Mejorar la % de cobro de la tasa municipal, Incorporar ONGs, actores sociales, políticos y educación para hacer un proyecto qe trascienda la gestión política. Que sea política de estado a largo plazo' }
+        ];
+
+        // Datos para las otras dos filas de ejemplo
+        const datosEjemploFila2 = {
+            'Generación - Cantidad': '',
+            'Generación - Unidad de medida': '',
+            'Generación - Observaciones': '',
+            'Recolección - Cantidad': '',
+            'Recolección - Tipo': '',
+            'Recolección - Frecuencia': '',
+            'Recolección - Observaciones': '',
+            'Transporte - Tipo': '',
+            'Transporte - Frecuencia': '',
+            'Transporte - Observaciones': '',
+            'Pretratamiento - Fracción': 'Compostaje urbano',
+            'Pretratamiento - %': '50/110',
+            'Pretratamiento - Observaciones': '',
+            'Higiene urbana - Tipo': '',
+            'Higiene urbana - Frecuencia': '',
+            'Higiene urbana - Observaciones': '',
+            'Tratamiento - Fracción': 'orgánicos',
+            'Tratamiento - Proceso': 'compostaje aeróbico en pilas',
+            'Tratamiento - Destino': '',
+            'Disposición - Tn/mes': '',
+            'Disposición - Vida útil': '',
+            'Disposición - Observaciones': '',
+            'Factibilidad': ''
+        };
+        const datosEjemploFila3 = {
+            'Generación - Cantidad': '',
+            'Generación - Unidad de medida': '',
+            'Generación - Observaciones': '',
+            'Recolección - Cantidad': '',
+            'Recolección - Tipo': '',
+            'Recolección - Frecuencia': '',
+            'Recolección - Observaciones': '',
+            'Transporte - Tipo': '',
+            'Transporte - Frecuencia': '',
+            'Transporte - Observaciones': '',
+            'Pretratamiento - Fracción': 'rechazo del pretratamiento',
+            'Pretratamiento - %': '10/110',
+            'Pretratamiento - Observaciones': '',
+            'Higiene urbana - Tipo': '',
+            'Higiene urbana - Frecuencia': '',
+            'Higiene urbana - Observaciones': '',
+            'Tratamiento - Fracción': 'rechazo',
+            'Tratamiento - Proceso': 'disposición en relleno sanitario controlado "consorcio"',
+            'Tratamiento - Destino': '',
+            'Disposición - Tn/mes': '',
+            'Disposición - Vida útil': '',
+            'Disposición - Observaciones': '',
+            'Factibilidad': ''
+        };
 
         async function cargarElementos() {
             try {
@@ -765,6 +961,7 @@
                     document.getElementById('activity-content').classList.remove('hidden');
                     cargarActividad1();
                     cargarActividad2();
+                    cargarActividad3();
                 } else {
                     mostrarMensaje('login-message', data.message || 'Credenciales incorrectas.', 'danger');
                 }
@@ -777,6 +974,7 @@
             }
         });
 
+        // ---------- Actividad 1 ----------
         async function cargarActividad1() {
             if (!usuarioActual) return;
             document.getElementById('mod1-spinner').classList.remove('hidden');
@@ -810,7 +1008,7 @@
             } catch (err) { console.error(err); mostrarMensaje('mod1-message', 'Error de conexión.', 'danger'); }
         });
 
-        // --- Actividad 2 ---
+        // ---------- Actividad 2 ----------
         document.getElementById('btn-add-task').addEventListener('click', () => {
             tareaEditando = null;
             document.getElementById('taskModalLabel').textContent = 'Nueva tarea';
@@ -1043,6 +1241,97 @@
             tareas = [];
             proximoId = 1;
             renderizarDiagrama();
+        });
+
+        // ---------- Actividad 3 ----------
+        function generarTablaEditable() {
+            const tbody = document.getElementById('tabla-body');
+            tbody.innerHTML = '';
+
+            // Crear filas para cada campo
+            datosEjemploTabla.forEach(item => {
+                const fila = document.createElement('tr');
+                const tdCampo = document.createElement('td');
+                tdCampo.className = 'campo';
+                tdCampo.textContent = item.campo;
+                fila.appendChild(tdCampo);
+
+                // Tres columnas de datos (Ejemplo 1, 2, 3)
+                for (let i = 0; i < 3; i++) {
+                    const td = document.createElement('td');
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.dataset.campo = item.campo;
+                    input.dataset.ejemplo = i + 1;
+                    // Placeholder: para columna 1 usar item.valor, para columna 2 y 3 usar datos correspondientes
+                    if (i === 0) {
+                        input.placeholder = item.valor || '';
+                    } else if (i === 1) {
+                        input.placeholder = datosEjemploFila2[item.campo] || '';
+                    } else {
+                        input.placeholder = datosEjemploFila3[item.campo] || '';
+                    }
+                    td.appendChild(input);
+                    fila.appendChild(td);
+                }
+                tbody.appendChild(fila);
+            });
+        }
+
+        function obtenerDatosTabla() {
+            const filas = [];
+            // Se recogen los inputs organizados por campo y ejemplo
+            const campos = datosEjemploTabla.map(item => item.campo);
+            // Inicializar tres objetos para los tres ejemplos
+            const ejemplo1 = {};
+            const ejemplo2 = {};
+            const ejemplo3 = {};
+            document.querySelectorAll('#tabla-body input').forEach(input => {
+                const campo = input.dataset.campo;
+                const ejemplo = parseInt(input.dataset.ejemplo);
+                if (ejemplo === 1) ejemplo1[campo] = input.value.trim();
+                else if (ejemplo === 2) ejemplo2[campo] = input.value.trim();
+                else if (ejemplo === 3) ejemplo3[campo] = input.value.trim();
+            });
+            filas.push(ejemplo1, ejemplo2, ejemplo3);
+            return filas;
+        }
+
+        async function cargarActividad3() {
+            if (!usuarioActual) return;
+            document.getElementById('mod3-spinner').classList.remove('hidden');
+            generarTablaEditable(); // Inicializar con placeholders de ejemplo
+            try {
+                const body = new URLSearchParams({ action: 'getMod3', correo: usuarioActual.correo, dni: usuarioActual.dni });
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const result = await resp.json();
+                if (result.success && result.data) {
+                    // result.data es un array con tres objetos (ejemplo1, ejemplo2, ejemplo3)
+                    const inputs = document.querySelectorAll('#tabla-body input');
+                    inputs.forEach(input => {
+                        const campo = input.dataset.campo;
+                        const ejemplo = parseInt(input.dataset.ejemplo);
+                        const valor = result.data[ejemplo - 1]?.[campo] || '';
+                        input.value = valor;
+                    });
+                }
+            } catch (err) { console.error('Error cargando actividad 3:', err); }
+            finally { document.getElementById('mod3-spinner').classList.add('hidden'); }
+        }
+
+        document.getElementById('btn-guardar-mod3').addEventListener('click', async () => {
+            if (!usuarioActual) return;
+            const datos = obtenerDatosTabla();
+            // Verificar que al menos un campo esté lleno
+            const hayDatos = datos.some(fila => Object.values(fila).some(val => val.trim() !== ''));
+            if (!hayDatos) { mostrarMensaje('mod3-message', 'Complete al menos un campo.', 'warning'); return; }
+            const body = new URLSearchParams({ action: 'saveMod3', correo: usuarioActual.correo, dni: usuarioActual.dni, data: JSON.stringify(datos) });
+            try {
+                const resp = await fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                const result = await resp.json();
+                if (result.success) mostrarMensaje('mod3-message', 'Tabla guardada correctamente.', 'success');
+                else mostrarMensaje('mod3-message', result.message || 'Error al guardar.', 'danger');
+            } catch (err) { console.error(err); mostrarMensaje('mod3-message', 'Error de conexión.', 'danger'); }
         });
 
         document.getElementById('btn-imprimir').addEventListener('click', () => { window.print(); });
