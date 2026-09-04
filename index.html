@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" type="image/png" href="favicon.png">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestión de Residuos en Comunas, Municipios y Zonas Rurales</title>
+    <title>Actividades especiales | Curso de Gestión de Residuos</title>
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -37,6 +36,7 @@
             min-height: 100vh;
         }
 
+        /* Skip link */
         .skip-link {
             position: absolute;
             left: -9999px;
@@ -53,6 +53,7 @@
             top: 0;
         }
 
+        /* Navbar */
         .navbar {
             background-color: var(--bg);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
@@ -144,8 +145,9 @@
             font-size: 0.9rem;
         }
 
+        /* Hero / header de página */
         .hero-page {
-            padding: 2.5rem 0 1.8rem;
+            padding: 3.5rem 0 2.5rem;
             background: linear-gradient(135deg, rgba(43, 76, 111, 0.05) 0%, rgba(120, 166, 79, 0.07) 100%);
             border-bottom: 1px solid rgba(43, 76, 111, 0.1);
         }
@@ -162,18 +164,19 @@
             margin-bottom: 1rem;
         }
         .hero-page h1 {
-            font-size: 2.4rem;
+            font-size: 2.8rem;
             font-weight: 800;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             letter-spacing: -0.5px;
         }
-        .hero-page .lead {
-            font-size: 1.1rem;
+        .hero-page p {
+            font-size: 1.15rem;
             color: #555;
-            max-width: 820px;
+            max-width: 720px;
         }
 
+        /* Main */
         main {
             flex: 1;
             padding-bottom: 3rem;
@@ -182,13 +185,17 @@
             background: var(--white);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 2rem;
+            padding: 2.2rem;
             margin-top: 2rem;
+            transition: var(--transition);
+        }
+        .bloque:hover {
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
         }
         .bloque h2 {
             color: var(--primary);
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
@@ -196,923 +203,333 @@
         }
         .bloque h2 i {
             color: var(--accent);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+        }
+        .bloque p {
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
         }
 
-        .equipo {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 1.2rem;
-            line-height: 1.7;
+        /* Actividades */
+        .actividad-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.8rem 1.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            position: relative;
         }
-        .equipo strong {
+        .actividad-card.activa {
+            border-color: var(--accent);
+            background: linear-gradient(145deg, #ffffff 60%, rgba(120, 166, 79, 0.06));
+        }
+        .actividad-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+        .actividad-card .icono {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            background-color: rgba(43, 76, 111, 0.08);
             color: var(--primary);
         }
-
-        .acciones {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 1.8rem 0 1rem;
-            align-items: center;
+        .actividad-card.activa .icono {
+            background-color: var(--accent);
+            color: white;
         }
-        .btn-desactivado {
-            background-color: #ccc;
-            color: #555;
-            border: none;
-            border-radius: 50px;
-            padding: 0.55rem 1.4rem;
-            font-weight: 600;
+        .actividad-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.6rem;
+        }
+        .actividad-card p {
             font-size: 0.95rem;
-            cursor: not-allowed;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            pointer-events: none;
+            color: #666;
+            flex-grow: 1;
+            margin-bottom: 1.2rem;
         }
-        .btn-guia {
-            background-color: var(--primary);
+        .btn-actividad {
+            background-color: var(--accent);
             color: white;
             border: none;
             border-radius: 50px;
             padding: 0.55rem 1.4rem;
             font-weight: 600;
             font-size: 0.95rem;
+            transition: var(--transition);
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            text-decoration: none;
-            transition: var(--transition);
+            align-self: flex-start;
         }
-        .btn-guia:hover {
-            background-color: #1e3a57;
+        .btn-actividad:hover {
+            background-color: #5f8a3a;
             color: white;
             transform: translateY(-2px);
         }
-
-        .leyenda-botones {
-            font-size: 0.85rem;
-            color: #777;
-            margin-bottom: 1rem;
-        }
-
-        .mail-consultas {
-            background-color: rgba(120, 166, 79, 0.1);
-            border-left: 4px solid var(--accent);
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
+        .proximamente-overlay {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #ccc;
             color: #444;
-            margin: 1.2rem 0;
-        }
-        .mail-consultas a {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* Calendario */
-        #calendario-container {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .calendario-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .calendario-header button {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary);
-            cursor: pointer;
-            padding: 0.3rem 0.8rem;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-        .calendario-header button:hover {
-            background-color: rgba(43, 76, 111, 0.1);
-        }
-        .calendario-header h3 {
-            color: var(--primary);
-            font-weight: 700;
-            margin: 0;
-        }
-        .calendario-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-        .calendario-table th,
-        .calendario-table td {
-            border: 1px solid #e0e0e0;
-            text-align: center;
-            vertical-align: top;
-            padding: 0.5rem;
-            height: 80px;
-            position: relative;
-        }
-        .calendario-table th {
-            background-color: var(--primary);
-            color: white;
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-        .calendario-table td {
-            background-color: var(--white);
-            transition: background-color 0.2s;
-        }
-        .calendario-table td:not(.vacio):hover {
-            background-color: rgba(43, 76, 111, 0.05);
-        }
-        .dia-numero {
-            font-weight: 700;
-            display: block;
-            margin-bottom: 0.3rem;
-            color: var(--text);
-        }
-        .clase-pasada {
-            background-color: #c8e6c9 !important; /* verde claro */
-        }
-        .clase-futura {
-            background-color: #a5d6a7 !important; /* verde normal */
-        }
-        .clase-proxima {
-            background-color: #ef9a9a !important; /* rojo */
-        }
-        .clase-etiqueta {
-            display: block;
-            font-size: 0.7rem;
-            color: #333;
-            line-height: 1.2;
-            word-wrap: break-word;
-            cursor: default;
-        }
-        .hoy {
-            border: 3px solid var(--accent);
-            font-weight: 800;
-        }
-
-        .accordion-button {
-            font-weight: 600;
-            color: var(--primary);
-            background-color: var(--white);
-            padding: 1rem 1.2rem;
-            border: none;
-            box-shadow: none;
-        }
-        .accordion-button:not(.collapsed) {
-            background-color: rgba(120, 166, 79, 0.08);
-            color: var(--primary);
-        }
-        .accordion-button:focus {
-            box-shadow: none;
-            border-color: rgba(120, 166, 79, 0.3);
-        }
-        .accordion-item {
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: var(--radius) !important;
-            margin-bottom: 0.8rem;
-            overflow: hidden;
-        }
-        .accordion-body {
-            background-color: var(--white);
-            padding: 1.2rem 1.5rem;
-        }
-
-        .modulo-actual {
-            border-left: 6px solid var(--accent);
-            background-color: rgba(120, 166, 79, 0.05);
-        }
-        .modulo-actual .accordion-button:not(.collapsed) {
-            background-color: rgba(120, 166, 79, 0.12);
-        }
-        .badge-actual {
-            background-color: var(--accent);
-            color: white;
             font-size: 0.7rem;
             font-weight: 700;
-            padding: 0.25rem 0.7rem;
+            padding: 0.3rem 0.9rem;
             border-radius: 20px;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            margin-left: 0.5rem;
-            white-space: nowrap;
+        }
+        .plus-sign {
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: #aaa;
+            line-height: 1;
+            margin-bottom: 0.8rem;
         }
 
-        .info-clase {
-            background-color: rgba(43, 76, 111, 0.04);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .info-clase p {
-            margin-bottom: 0.3rem;
-            font-size: 0.9rem;
-        }
-        .info-clase strong {
-            color: var(--primary);
-        }
-
-        .material-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: rgba(43, 76, 111, 0.06);
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            color: var(--primary);
-            text-decoration: none;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            transition: var(--transition);
-        }
-        .material-link:hover {
-            background-color: rgba(43, 76, 111, 0.15);
-            color: var(--primary);
-        }
-        .material-link.deshabilitado {
-            background-color: #e0e0e0;
-            color: #999;
-            pointer-events: none;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .video-container {
-            margin: 1rem 0;
-        }
-        .video-container iframe {
-            width: 100%;
-            max-width: 560px;
-            height: 315px;
-            border-radius: 12px;
-            border: none;
+        /* Imagen */
+        .imagen-recurso {
+            border-radius: var(--radius);
+            overflow: hidden;
             box-shadow: var(--shadow);
+            margin-top: 2.5rem;
         }
-
-        .imagen-decorativa {
-            border-radius: 12px;
-            object-fit: cover;
+        .imagen-recurso img {
             width: 100%;
             height: auto;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .contenedor-imagenes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        .contenedor-imagenes img {
-            width: calc(33.333% - 1rem);
-            min-width: 120px;
-            flex: 1 1 150px;
-            max-height: 180px;
+            display: block;
             object-fit: cover;
         }
 
-        .nota-campus {
-            background-color: rgba(43, 76, 111, 0.06);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #555;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 1.8rem 0;
+            text-align: center;
+            margin-top: 3rem;
         }
-        .nota-campus i {
-            color: var(--primary);
-            font-size: 1.4rem;
+        footer .footer-texto {
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .hero-page h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .bloque {
-                padding: 1.2rem;
+                padding: 1.5rem;
             }
-            .contenedor-imagenes img {
-                width: 100%;
-                max-height: 200px;
-            }
-            .calendario-table th,
-            .calendario-table td {
-                height: 60px;
-                font-size: 0.7rem;
+            .navbar-brand span {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div id="header-container"></div>
+    <!-- Skip link -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar navbar-expand-lg" aria-label="Navegación principal">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-recycle"></i>
+                <span>Gestión de Residuos</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <!-- Dropdown Actividades -->
+                    <li class="nav-item dropdown me-lg-3">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-list-check me-1"></i> Actividades
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="#actividad-modulo2">
+                                    <i class="fa-solid fa-play me-2 text-success"></i>
+                                    Módulo 2: Flujo de Trabajo en la Gestión de Residuos
+                                </a>
+                            </li>
+                            <li>
+                                <span class="dropdown-item disabled-item">
+                                    <span><i class="fa-solid fa-plus me-2"></i> Próximamente</span>
+                                    <span class="badge-soon">Muy pronto</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="dropdown-item disabled-item">
+                                    <span><i class="fa-solid fa-plus me-2"></i> Próximamente</span>
+                                    <span class="badge-soon">Muy pronto</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Botón Volver al Campus -->
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn-campus" href="https://capacitacion.senadoer.gob.ar/course/view.php?id=27"
+                            target="_blank" rel="noopener noreferrer" title="Ir al Campus Virtual">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            Volver al Campus
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO / ENCABEZADO ========== -->
     <header class="hero-page">
         <div class="container">
             <div class="etiqueta">Espacio complementario</div>
-            <h1>Gestión de Residuos en Comunas, Municipios y Zonas Rurales</h1>
-            
-            <div class="nota-campus">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>Página complementaria mientras el equipo técnico del Senado resuelve el campus virtual.</span>
-            </div>
-
-            <div class="equipo">
-                <div><strong>Coordinación General:</strong> Cristina Goyenechea</div>
-                <div><strong>Equipo Técnico:</strong> Pablo Kriger | Iván Princic</div>
-                <div><strong>Equipo Docente:</strong> Claudia Kalinec, Gabriela Joubert, Guillermo Marchesi, Javier Manzo, Maximiliano Gómez, Pablo Nardone, Patricia Fernández, Renée Córdova, Rosa Hojman, Santiago Rodríguez Alonso, Walter Ordinas.</div>
-            </div>
-
-            <div class="acciones">
-                <span class="btn-desactivado" title="Se activará durante el horario de clases">
-                    <i class="fa-solid fa-video"></i> Ir al Zoom
-                </span>
-                <span class="btn-desactivado" title="Se activará durante el horario de clases">
-                    <i class="fa-solid fa-clipboard-check"></i> Registrar asistencia
-                </span>
-                <a href="https://drive.google.com/open?id=1H6Yvn6HYS7EfyRCRfoI8QqgiIwhtO3OA" 
-                   class="btn-guia" target="_blank" rel="noopener">
-                    <i class="fa-solid fa-book-open"></i> #Guía de cursado
-                </a>
-            </div>
-            <div class="leyenda-botones">
-                <i class="fa-regular fa-clock me-1"></i> Los botones de Zoom y asistencia se activarán durante el horario de clases (17 a 19 hs), los días lunes o jueves según el módulo.
-            </div>
-            <p class="mb-0" style="font-size:0.9rem; color:#666;">
-                La guía de cursado contiene toda la información pertinente, incluido el cronograma de clases.
-            </p>
-
-            <div class="mail-consultas">
-                <i class="fa-solid fa-envelope me-2"></i>
-                Consultas especiales (hasta que se resuelva el campus): 
-                <a href="mailto:formacion.residuos@gmail.com">formacion.residuos@gmail.com</a>
-            </div>
-
-            <!-- Calendario -->
-            <div id="calendario-container"></div>
+            <h1>Actividades especiales</h1>
+            <p>Curso de Gestión de Residuos para comunas, municipios y zonas rurales</p>
         </div>
     </header>
 
+    <!-- ========== MAIN ========== -->
     <main id="main-content">
         <div class="container">
-            <!-- MÓDULOS / ACORDEÓN CON CRONOGRAMA INTEGRADO -->
-            <section class="bloque" aria-labelledby="titulo-modulos">
-                <h2 id="titulo-modulos">
-                    <i class="fa-solid fa-folder-open"></i> Material y cronograma por módulo
+
+            <!-- INTRODUCCIÓN -->
+            <section class="bloque" aria-labelledby="bienvenidos">
+                <h2 id="bienvenidos">
+                    <i class="fa-solid fa-hand-peace"></i> Bienvenidos
                 </h2>
-                <div class="accordion" id="acordeonModulos">
-                    <!-- Presentación -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingPresentacion">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePresentacion" aria-expanded="false" aria-controls="collapsePresentacion">
-                                Presentación | 24/08/2026
-                            </button>
-                        </h2>
-                        <div id="collapsePresentacion" class="accordion-collapse collapse" aria-labelledby="headingPresentacion" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Fecha:</strong> 24/08/2026 | <strong>Horario:</strong> 15-17hs</p>
-                                    <p><strong>Profesores:</strong> Ing. Cristina Goyenechea y Equipo Docente | Autoridades</p>
-                                    <p><strong>Contenidos:</strong> Presentación de docentes e introducción al Curso.</p>
-                                </div>
-                                <p><strong>Video de la clase grabada</strong></p>
-                                <div class="video-container">
-                                    <iframe src="https://www.youtube.com/embed/v_-f95E7ibE" title="Video presentación" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                                <p class="mt-3"><strong>Bibliografía</strong></p>
-                                <!-- Si no hay link, dejar deshabilitado -->
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p class="mt-3"><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
+                <p>
+                    Este espacio fue creado como complemento del aula virtual del curso. Aquí encontrarán actividades,
+                    ejercicios y recursos especialmente diseñados para trabajar con herramientas que requieren
+                    funcionalidades que Moodle no siempre permite desarrollar.
+                </p>
+                <p>
+                    Por eso, esta página no reemplaza al aula virtual: <strong>la complementa.</strong>
+                </p>
+            </section>
+
+            <!-- ACTIVIDADES -->
+            <section class="mt-5" aria-labelledby="titulo-actividades">
+                <h2 id="titulo-actividades" class="mb-4" style="color: var(--primary); font-weight: 700; font-size: 1.9rem;">
+                    <i class="fa-solid fa-tasks me-2" style="color: var(--accent);"></i>
+                    Actividades disponibles
+                </h2>
+                <div class="row g-4">
+                    <!-- Actividad 1 (activa) -->
+                    <div class="col-md-4 d-flex">
+                        <div class="actividad-card activa" id="actividad-modulo2">
+                            <div class="icono">
+                                <i class="fa-solid fa-arrows-spin"></i>
                             </div>
+                            <h3>Módulo 2: Flujo de Trabajo en la Gestión de Residuos</h3>
+                            <p>
+                                Explora el flujo completo de trabajo en la gestión de residuos, desde la generación
+                                hasta la disposición final. Actividad interactiva con casos prácticos.
+                            </p>
+                            <a href="#" class="btn-actividad" title="Ingresar a la actividad">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                Ingresar
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Módulo I -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod1" aria-expanded="false" aria-controls="collapseMod1">
-                                Módulo I | 31/08/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod1" class="accordion-collapse collapse" aria-labelledby="headingMod1" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Fecha:</strong> 31/08/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Dr. Guillermo Marchesi<br>Dr. Osvaldo Fernández</p>
-                                    <p><strong>Contenidos:</strong> Marco Legal general para todas las corrientes de residuos.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <iframe src="https://www.youtube.com/embed/BPcCotpmLZg" title="Video Módulo I" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                                <p class="mt-3"><strong>Bibliografía sugerida</strong></p>
-                                <a href="https://drive.google.com/open?id=1ZafhCVQcY2bf3fRIpW9jFrPYAy70CM3g" class="material-link" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p class="mt-3"><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
+                    <!-- Actividad 2 (próximamente) -->
+                    <div class="col-md-4 d-flex">
+                        <div class="actividad-card">
+                            <span class="proximamente-overlay">Próximamente</span>
+                            <div class="plus-sign">
+                                <i class="fa-solid fa-plus"></i>
                             </div>
+                            <h3>Actividad 2</h3>
+                            <p>
+                                Contenido en preparación. Estamos diseñando una nueva experiencia de aprendizaje
+                                para este módulo.
+                            </p>
+                            <span class="btn-actividad" style="background-color: #ccc; pointer-events: none;">
+                                <i class="fa-solid fa-lock"></i>
+                                Disponible pronto
+                            </span>
                         </div>
                     </div>
 
-                    <!-- Módulo II (actual, resaltado) -->
-                    <div class="accordion-item modulo-actual">
-                        <h2 class="accordion-header" id="headingMod2">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod2" aria-expanded="true" aria-controls="collapseMod2">
-                                Módulo II | 07/09/2026
-                                <span class="badge-actual">Clase actual</span>
-                            </button>
-                        </h2>
-                        <div id="collapseMod2" class="accordion-collapse collapse show" aria-labelledby="headingMod2" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Primera clase:</strong> 07/09/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Arq. Santiago Rodríguez Alonso<br>Dr. Javier Manzo</p>
-                                    <p><strong>Contenidos:</strong> Planificación estratégica y diseño de Planes de Gestión Integral de Residuos Sólidos Urbanos.</p>
-                                </div>
-                                <div class="info-clase">
-                                    <p><strong>Segunda clase:</strong> 10/09/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Arq. Santiago Rodríguez Alonso<br>Dr. Javier Manzo</p>
-                                    <p><strong>Contenidos:</strong> Continuación de Planificación estratégica y diseño de Planes de Gestión Integral de Residuos Sólidos Urbanos.</p>
-                                </div>
-                                <p><strong>Bibliografía general</strong> (no obligatoria, el docente indicará partes durante la clase)</p>
-                                <a href="https://drive.google.com/drive/folders/1fOX9LzxTSMg3U5rY-xVCXBGbsE-_v_w7" class="material-link" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p class="mt-3"><strong>Actividad del Módulo II</strong></p>
-                                <a href="https://redconsultor.github.io/curso_residuos/mod2/" class="material-link" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingresar a la actividad
-                                </a>
-                                <!-- Video aún no disponible -->
-                                <p class="mt-3"><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
+                    <!-- Actividad 3 (próximamente) -->
+                    <div class="col-md-4 d-flex">
+                        <div class="actividad-card">
+                            <span class="proximamente-overlay">Próximamente</span>
+                            <div class="plus-sign">
+                                <i class="fa-solid fa-plus"></i>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo III -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod3" aria-expanded="false" aria-controls="collapseMod3">
-                                Módulo III | 14/09/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod3" class="accordion-collapse collapse" aria-labelledby="headingMod3" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Primera clase:</strong> 14/09/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Arq. Santiago Rodríguez Alonso<br>Dr. Javier Manzo</p>
-                                    <p><strong>Contenidos:</strong> Infraestructura, Operación y Logística de los Sistemas de Gestión.</p>
-                                </div>
-                                <p>Se compartirá la actividad del Módulo II, relacionada con mejorar el flujo de trabajos en la gestión de residuos.</p>
-                                <a href="https://redconsultor.github.io/curso_residuos/mod2/" class="material-link" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Acceder a la actividad
-                                </a>
-                                <!-- Video aún no disponible -->
-                                <p class="mt-3"><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <!-- Bibliografía vacía -->
-                                <p class="mt-3"><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo IV -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod4">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod4" aria-expanded="false" aria-controls="collapseMod4">
-                                Módulo IV | 21/09/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod4" class="accordion-collapse collapse" aria-labelledby="headingMod4" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Primera clase:</strong> 21/09/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Lic. Claudia Kalinec<br>Ing. Gabriela Joubert</p>
-                                    <p><strong>Contenidos:</strong> Gestión de Corrientes Especiales, Peligrosos y de Manejo Diferenciado.</p>
-                                </div>
-                                <div class="info-clase">
-                                    <p><strong>Segunda clase:</strong> 28/09/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Lic. Claudia Kalinec<br>Ing. Gabriela Joubert</p>
-                                    <p><strong>Contenidos:</strong> Continuación de Gestión de Corrientes Especiales, Peligrosos y de Manejo Diferenciado.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <p><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo V -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod5">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod5" aria-expanded="false" aria-controls="collapseMod5">
-                                Módulo V | 05/10/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod5" class="accordion-collapse collapse" aria-labelledby="headingMod5" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Fecha:</strong> 05/10/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Bioq. Pablo Nardone</p>
-                                    <p><strong>Contenidos:</strong> Regionalización y Gestión Intermunicipal.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <p><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo VI -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod6">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod6" aria-expanded="false" aria-controls="collapseMod6">
-                                Módulo VI | 15/10/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod6" class="accordion-collapse collapse" aria-labelledby="headingMod6" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Primera clase:</strong> 15/10/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Bioq. Pablo Nardone</p>
-                                    <p><strong>Contenidos:</strong> Gestión de Residuos de la Actividad Agropecuaria.</p>
-                                </div>
-                                <div class="info-clase">
-                                    <p><strong>Segunda clase:</strong> 19/10/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Bioq. Pablo Nardone</p>
-                                    <p><strong>Contenidos:</strong> Continuación de Gestión de Residuos de la Actividad Agropecuaria.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <p><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo VII -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod7">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod7" aria-expanded="false" aria-controls="collapseMod7">
-                                Módulo VII | 26/10/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod7" class="accordion-collapse collapse" aria-labelledby="headingMod7" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Primera clase:</strong> 26/10/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Ing. Patricia Fernández<br>Ing. Walter Ordinas</p>
-                                    <p><strong>Contenidos:</strong> Economía Circular, Valorización y Financiamiento.</p>
-                                </div>
-                                <div class="info-clase">
-                                    <p><strong>Segunda clase:</strong> 02/11/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesores:</strong> Ing. Patricia Fernández<br>Ing. Walter Ordinas</p>
-                                    <p><strong>Contenidos:</strong> Continuación de Economía Circular, Valorización y Financiamiento.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <p><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo VIII -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod8">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod8" aria-expanded="false" aria-controls="collapseMod8">
-                                Módulo VIII | 09/11/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod8" class="accordion-collapse collapse" aria-labelledby="headingMod8" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Primera clase:</strong> 09/11/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Renée Córdova</p>
-                                    <p><strong>Contenidos:</strong> Alternativas de Financiamiento y Soluciones Sectoriales.</p>
-                                </div>
-                                <div class="info-clase">
-                                    <p><strong>Segunda clase:</strong> 16/11/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Renée Córdova</p>
-                                    <p><strong>Contenidos:</strong> Continuación de Alternativas de Financiamiento y Soluciones Sectoriales.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <p><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo IX -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod9">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod9" aria-expanded="false" aria-controls="collapseMod9">
-                                Módulo IX | 23/11/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod9" class="accordion-collapse collapse" aria-labelledby="headingMod9" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Fecha:</strong> 23/11/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Rosa Hojman</p>
-                                    <p><strong>Contenidos:</strong> Educación Ambiental, participación ciudadana e Inclusión Social.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <p><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Módulo X -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingMod10">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMod10" aria-expanded="false" aria-controls="collapseMod10">
-                                Módulo X | 26/11/2026
-                            </button>
-                        </h2>
-                        <div id="collapseMod10" class="accordion-collapse collapse" aria-labelledby="headingMod10" data-bs-parent="#acordeonModulos">
-                            <div class="accordion-body">
-                                <div class="info-clase">
-                                    <p><strong>Primera clase:</strong> 26/11/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Maximiliano Gómez</p>
-                                    <p><strong>Contenidos:</strong> Prácticas: Estudio de Casos y Proyectos de Intervención.</p>
-                                </div>
-                                <div class="info-clase">
-                                    <p><strong>Segunda clase:</strong> 30/11/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Maximiliano Gómez</p>
-                                    <p><strong>Contenidos:</strong> Continuación de Prácticas: Estudio de Casos y Proyectos de Intervención.</p>
-                                </div>
-                                <div class="info-clase">
-                                    <p><strong>Tercera clase:</strong> 03/12/2026 | <strong>Horario:</strong> 17-19hs</p>
-                                    <p><strong>Profesor:</strong> Lic. Maximiliano Gómez</p>
-                                    <p><strong>Contenidos:</strong> Cierre y presentación de proyectos de intervención.</p>
-                                </div>
-                                <p><strong>Video de la clase</strong></p>
-                                <div class="video-container">
-                                    <p class="text-muted"><i class="fa-regular fa-hourglass-half me-2"></i>Aún no cargado</p>
-                                </div>
-                                <p><strong>Bibliografía</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-google-drive"></i> Carpeta de Drive
-                                </a>
-                                <p><strong>Actividad</strong></p>
-                                <a href="#" class="material-link deshabilitado" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Actividad
-                                </a>
-                            </div>
+                            <h3>Actividad 3</h3>
+                            <p>
+                                Nuevo recurso interactivo en camino. ¡Mantente atento a las novedades!
+                            </p>
+                            <span class="btn-actividad" style="background-color: #ccc; pointer-events: none;">
+                                <i class="fa-solid fa-lock"></i>
+                                Disponible pronto
+                            </span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Imágenes pequeñas decorativas -->
-            <div class="contenedor-imagenes">
-                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=400&auto=format&fit=crop" alt="Contenedores de reciclaje" class="imagen-decorativa" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1604187351574-c75ca79f5807?q=80&w=400&auto=format&fit=crop" alt="Residuos urbanos" class="imagen-decorativa" loading="lazy">
-                <img src="https://images.unsplash.com/photo-1605600659908-0ef719419d41?q=80&w=400&auto=format&fit=crop" alt="Planta de gestión de residuos" class="imagen-decorativa" loading="lazy">
+            <!-- IMAGEN SOBRE GESTIÓN DE RESIDUOS -->
+            <div class="imagen-recurso">
+                <img
+                    src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=1200&auto=format&fit=crop"
+                    alt="Contenedores de reciclaje de diferentes colores para separación de residuos"
+                    loading="lazy" />
             </div>
+
         </div>
     </main>
 
-    <div id="footer-container"></div>
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="container">
+            <div class="footer-texto">
+                Curso de Gestión de Residuos para comunas, municipios y zonas rurales
+            </div>
+        </div>
+    </footer>
 
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Script para cerrar dropdown en móvil al hacer clic en un enlace (opcional) -->
     <script>
-        // Cargar header y footer
-        async function cargarElementos() {
-            try {
-                const respuesta = await fetch('elements/index.html');
-                if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-                const html = await respuesta.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-
-                const skipLink = doc.querySelector('.skip-link');
-                const navbar = doc.querySelector('nav');
-                const footer = doc.querySelector('footer');
-
-                if (skipLink && navbar) {
-                    document.getElementById('header-container').innerHTML = skipLink.outerHTML + navbar.outerHTML;
-                }
-                if (footer) {
-                    document.getElementById('footer-container').innerHTML = footer.outerHTML;
-                }
-
-                const dropdownToggles = document.querySelectorAll('[data-bs-toggle="dropdown"]');
-                dropdownToggles.forEach(toggle => new bootstrap.Dropdown(toggle));
-            } catch (error) {
-                console.error('Error cargando elementos comunes:', error);
-            }
-        }
-
-        // Datos de las clases
-        const clases = [
-            { fecha: '2026-08-24', titulo: 'Presentación', contenido: 'Introducción al curso', pasada: true },
-            { fecha: '2026-08-31', titulo: 'Módulo I', contenido: 'Marco Legal', pasada: true },
-            { fecha: '2026-09-07', titulo: 'Módulo II', contenido: 'Planificación estratégica', pasada: false, proxima: true },
-            { fecha: '2026-09-10', titulo: 'Módulo II (2da)', contenido: 'Planificación estratégica (cont.)', pasada: false },
-            { fecha: '2026-09-14', titulo: 'Módulo III', contenido: 'Infraestructura y Logística', pasada: false },
-            { fecha: '2026-09-21', titulo: 'Módulo IV', contenido: 'Corrientes Especiales', pasada: false },
-            { fecha: '2026-09-28', titulo: 'Módulo IV (2da)', contenido: 'Corrientes Especiales (cont.)', pasada: false },
-            { fecha: '2026-10-05', titulo: 'Módulo V', contenido: 'Regionalización', pasada: false },
-            { fecha: '2026-10-15', titulo: 'Módulo VI', contenido: 'Residuos Agropecuarios', pasada: false },
-            { fecha: '2026-10-19', titulo: 'Módulo VI (2da)', contenido: 'Residuos Agropecuarios (cont.)', pasada: false },
-            { fecha: '2026-10-26', titulo: 'Módulo VII', contenido: 'Economía Circular', pasada: false },
-            { fecha: '2026-11-02', titulo: 'Módulo VII (2da)', contenido: 'Economía Circular (cont.)', pasada: false },
-            { fecha: '2026-11-09', titulo: 'Módulo VIII', contenido: 'Financiamiento', pasada: false },
-            { fecha: '2026-11-16', titulo: 'Módulo VIII (2da)', contenido: 'Financiamiento (cont.)', pasada: false },
-            { fecha: '2026-11-23', titulo: 'Módulo IX', contenido: 'Educación Ambiental', pasada: false },
-            { fecha: '2026-11-26', titulo: 'Módulo X', contenido: 'Estudio de Casos', pasada: false },
-            { fecha: '2026-11-30', titulo: 'Módulo X (2da)', contenido: 'Estudio de Casos (cont.)', pasada: false },
-            { fecha: '2026-12-03', titulo: 'Módulo X (3ra)', contenido: 'Cierre y Proyectos', pasada: false },
-        ];
-
-        const fechaActual = new Date(2026, 8, 1); // 1 de septiembre de 2026
-        let mesActual = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
-
-        function formatearFecha(fecha) {
-            return fecha.toISOString().split('T')[0];
-        }
-
-        function obtenerClasesDeMes(mes, anio) {
-            return clases.filter(c => {
-                const d = new Date(c.fecha + 'T00:00:00');
-                return d.getMonth() === mes && d.getFullYear() === anio;
-            });
-        }
-
-        function generarCalendario() {
-            const container = document.getElementById('calendario-container');
-            if (!container) return;
-
-            const anio = mesActual.getFullYear();
-            const mes = mesActual.getMonth();
-
-            const nombreMes = mesActual.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
-            const clasesDelMes = obtenerClasesDeMes(mes, anio);
-
-            let html = `
-                <div class="calendario-header">
-                    <button id="btn-mes-anterior" aria-label="Mes anterior"><i class="fa-solid fa-chevron-left"></i></button>
-                    <h3>${nombreMes}</h3>
-                    <button id="btn-mes-siguiente" aria-label="Mes siguiente"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-                <table class="calendario-table">
-                    <thead>
-                        <tr>
-                            <th>Lun</th><th>Mar</th><th>Mié</th><th>Jue</th><th>Vie</th><th>Sáb</th><th>Dom</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            const primerDia = new Date(anio, mes, 1);
-            let diaSemana = primerDia.getDay(); // 0=Dom, 1=Lun, ... 6=Sáb
-            if (diaSemana === 0) diaSemana = 7; // Ajustar para que Lunes sea 1
-            const diasEnMes = new Date(anio, mes + 1, 0).getDate();
-
-            let fila = '<tr>';
-            for (let i = 1; i < diaSemana; i++) {
-                fila += '<td class="vacio"></td>';
-            }
-
-            for (let dia = 1; dia <= diasEnMes; dia++) {
-                const fechaStr = `${anio}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
-                const clase = clasesDelMes.find(c => c.fecha === fechaStr);
-                const esHoy = fechaActual.getFullYear() === anio && fechaActual.getMonth() === mes && fechaActual.getDate() === dia;
-
-                let claseClass = '';
-                let etiqueta = '';
-                if (clase) {
-                    if (clase.pasada) {
-                        claseClass = 'clase-pasada';
-                    } else if (clase.proxima) {
-                        claseClass = 'clase-proxima';
-                    } else {
-                        claseClass = 'clase-futura';
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cierra el menú desplegable al hacer clic en un elemento (en móvil)
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const dropdownMenu = item.closest('.dropdown-menu');
+                    const dropdownToggle = dropdownMenu?.previousElementSibling;
+                    if (dropdownToggle && window.innerWidth < 992) {
+                        bootstrap.Dropdown.getInstance(dropdownToggle)?.hide();
                     }
-                    etiqueta = `<span class="clase-etiqueta" title="${clase.titulo}: ${clase.contenido}">${clase.titulo.split(' ')[1] || clase.titulo}</span>`;
-                }
-
-                const hoyClass = esHoy ? ' hoy' : '';
-                fila += `<td class="${claseClass}${hoyClass}">
-                            <span class="dia-numero">${dia}</span>
-                            ${etiqueta}
-                        </td>`;
-
-                if ((diaSemana + dia - 1) % 7 === 0 && dia !== diasEnMes) {
-                    fila += '</tr><tr>';
-                }
-            }
-
-            // Completar celdas vacías al final
-            const celdasRestantes = (7 - ((diaSemana + diasEnMes - 1) % 7)) % 7;
-            for (let i = 0; i < celdasRestantes; i++) {
-                fila += '<td class="vacio"></td>';
-            }
-            fila += '</tr>';
-            html += fila + '</tbody></table>';
-
-            container.innerHTML = html;
-
-            document.getElementById('btn-mes-anterior').addEventListener('click', () => {
-                mesActual = new Date(anio, mes - 1, 1);
-                generarCalendario();
+                });
             });
-            document.getElementById('btn-mes-siguiente').addEventListener('click', () => {
-                mesActual = new Date(anio, mes + 1, 1);
-                generarCalendario();
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarElementos();
-            generarCalendario();
         });
     </script>
-    <p class="lead">
-                Esta capacitación es impulsada por la <strong>Secretaría de Ambiente</strong>, con financiamiento del 
-                <strong>Consejo Federal de Inversiones (CFI)</strong>, y cuenta con el apoyo del 
-                <strong>Instituto de Formación Legislativa (IFL)</strong> y la <strong>Vicegobernación de la Provincia</strong>.
-            </p>
 </body>
 </html>
